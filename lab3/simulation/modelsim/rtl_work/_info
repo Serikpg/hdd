@@ -1,0 +1,96 @@
+m255
+K4
+z2
+Z0 !s99 nomlopt
+R0
+R0
+!s11f vlog 2021.3_2 2021.09, Sep 10 2021
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z1 d/home/alumnes/s/serik.perez/hdd/lab3/simulation/modelsim
+T_opt
+!s110 1773332912
+V>5<1QDU0gTFIGj<5lYE0d2
+Z2 04 10 4 work tb_count28 fast 0
+=1-000ae431a4f1-69b2e9b0-9b694-1192
+Z3 !s124 OEM100
+o-quiet -auto_acc_if_foreign -work work
+Z4 tCvgOpt 0
+n@_opt
+Z5 OE;O;2021.3_2;73
+R1
+T_opt1
+!s110 1773332974
+V@06P83HV2RFIIjn1zoYco2
+R2
+=1-000ae431a4f1-69b2e9ee-94f0e-11b3
+R3
+o-quiet -auto_acc_if_foreign -work work +acc
+R4
+n@_opt1
+R5
+R1
+vcount28
+Z6 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
+Z7 !s110 1773332881
+!i10b 1
+!s100 >EMCacQRITSJ?Ok0`aWC:0
+I4[Fk_=J@M33z87aDzGX<`0
+S1
+R1
+w1663080756
+8/home/alumnes/s/serik.perez/hdd/lab3/HDD_files_lab3/count28.sv
+F/home/alumnes/s/serik.perez/hdd/lab3/HDD_files_lab3/count28.sv
+!i122 0
+L0 3 50
+Z8 VDg1SIo80bB@j0V0VzS_@n1
+Z9 OE;L;2021.3_2;73
+r1
+!s85 0
+31
+Z10 !s108 1773332881.000000
+!s107 /home/alumnes/s/serik.perez/hdd/lab3/HDD_files_lab3/count28.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+/home/alumnes/s/serik.perez/hdd/lab3/HDD_files_lab3|/home/alumnes/s/serik.perez/hdd/lab3/HDD_files_lab3/count28.sv|
+!i113 0
+Z11 o-sv -work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z12 !s92 -sv -work work +incdir+/home/alumnes/s/serik.perez/hdd/lab3/HDD_files_lab3 -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R4
+vtb_count28
+R6
+R7
+!i10b 1
+!s100 [9jozjkHaoBIDjSgNl]f51
+Im`AVaD_WSfzoEA2C3Oa?f0
+S1
+R1
+w1658820874
+8/home/alumnes/s/serik.perez/hdd/lab3/HDD_files_lab3/tb_count28.sv
+F/home/alumnes/s/serik.perez/hdd/lab3/HDD_files_lab3/tb_count28.sv
+!i122 1
+L0 3 38
+R8
+R9
+r1
+!s85 0
+31
+R10
+!s107 /home/alumnes/s/serik.perez/hdd/lab3/HDD_files_lab3/tb_count28.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+/home/alumnes/s/serik.perez/hdd/lab3/HDD_files_lab3|/home/alumnes/s/serik.perez/hdd/lab3/HDD_files_lab3/tb_count28.sv|
+!i113 0
+R11
+R12
+R4
+Ttb_count28_opt
+!s110 1773333096
+VC8cV2I>E1[78hggSo_l5L0
+R2
+!s102 +cover=bcesxf
+R3
+o+cover=bcesxf
+R4
+ntb_count28_opt
+R5

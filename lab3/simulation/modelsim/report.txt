@@ -1,0 +1,22 @@
+Coverage Report Summary Data by file
+
+=================================================================================
+=== File: /home/alumnes/s/serik.perez/hdd/lab3/HDD_files_lab3/count28.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                         3         3         0   100.00%
+    Statements                       8         8         0   100.00%
+    Toggles                        116        43        73    37.06%
+
+=================================================================================
+=== File: /home/alumnes/s/serik.perez/hdd/lab3/HDD_files_lab3/tb_count28.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Statements                      12        12         0   100.00%
+    Toggles                         66         8        58    12.12%
+
+
+Total Coverage By File (code coverage only, filtered view): 76.00%
+

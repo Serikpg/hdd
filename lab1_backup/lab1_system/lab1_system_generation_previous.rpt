@@ -1,0 +1,90 @@
+Info: Starting: Create block symbol file (.bsf)
+Info: qsys-generate /home/alumnes/s/serik.perez/hdd/lab1/lab1_system.qsys --block-symbol-file --output-directory=/home/alumnes/s/serik.perez/hdd/lab1/lab1_system --family="Cyclone V" --part=5CSXFC6D6F31C6
+Progress: Loading lab1/lab1_system.qsys
+Progress: Reading input file
+Progress: Adding ARM_A9_HPS [altera_hps 21.1]
+Progress: Parameterizing module ARM_A9_HPS
+Progress: Adding JTAG_UART [altera_avalon_jtag_uart 21.1]
+Progress: Parameterizing module JTAG_UART
+Progress: Adding System_PLL [altera_up_avalon_sys_sdram_pll 18.0]
+Progress: Parameterizing module System_PLL
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: lab1_system.ARM_A9_HPS: HPS Main PLL counter settings: n = 0  m = 73
+Info: lab1_system.ARM_A9_HPS: HPS peripherial PLL counter settings: n = 0  m = 39
+Warning: lab1_system.ARM_A9_HPS: "Configuration/HPS-to-FPGA user 0 clock frequency" (desired_cfg_clk_mhz) requested 100.0 MHz, but only achieved 97.368421 MHz
+Warning: lab1_system.ARM_A9_HPS: 1 or more output clock frequencies cannot be achieved precisely, consider revising desired output clock frequencies.
+Info: lab1_system.JTAG_UART: JTAG UART IP input clock need to be at least double (2x) the operating frequency of JTAG TCK on board
+Info: lab1_system.System_PLL: Refclk Freq: 50.0
+Warning: lab1_system.ARM_A9_HPS: ARM_A9_HPS.f2h_stm_hw_events must be exported, or connected to a matching conduit.
+Info: qsys-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: qsys-generate /home/alumnes/s/serik.perez/hdd/lab1/lab1_system.qsys --synthesis=VHDL --output-directory=/home/alumnes/s/serik.perez/hdd/lab1/lab1_system/synthesis --family="Cyclone V" --part=5CSXFC6D6F31C6
+Progress: Loading lab1/lab1_system.qsys
+Progress: Reading input file
+Progress: Adding ARM_A9_HPS [altera_hps 21.1]
+Progress: Parameterizing module ARM_A9_HPS
+Progress: Adding JTAG_UART [altera_avalon_jtag_uart 21.1]
+Progress: Parameterizing module JTAG_UART
+Progress: Adding System_PLL [altera_up_avalon_sys_sdram_pll 18.0]
+Progress: Parameterizing module System_PLL
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: lab1_system.ARM_A9_HPS: HPS Main PLL counter settings: n = 0  m = 73
+Info: lab1_system.ARM_A9_HPS: HPS peripherial PLL counter settings: n = 0  m = 39
+Warning: lab1_system.ARM_A9_HPS: "Configuration/HPS-to-FPGA user 0 clock frequency" (desired_cfg_clk_mhz) requested 100.0 MHz, but only achieved 97.368421 MHz
+Warning: lab1_system.ARM_A9_HPS: 1 or more output clock frequencies cannot be achieved precisely, consider revising desired output clock frequencies.
+Info: lab1_system.JTAG_UART: JTAG UART IP input clock need to be at least double (2x) the operating frequency of JTAG TCK on board
+Info: lab1_system.System_PLL: Refclk Freq: 50.0
+Warning: lab1_system.ARM_A9_HPS: ARM_A9_HPS.f2h_stm_hw_events must be exported, or connected to a matching conduit.
+Info: lab1_system: Generating lab1_system "lab1_system" for QUARTUS_SYNTH
+Info: Interconnect is inserted between master ARM_A9_HPS.h2f_lw_axi_master and slave JTAG_UART.avalon_jtag_slave because the master is of type axi and the slave is of type avalon.
+Warning: ARM_A9_HPS.f2h_irq0: Cannot connect clock for irq_mapper.sender
+Warning: ARM_A9_HPS.f2h_irq0: Cannot connect reset for irq_mapper.sender
+Warning: ARM_A9_HPS.f2h_irq1: Cannot connect clock for irq_mapper_001.sender
+Warning: ARM_A9_HPS.f2h_irq1: Cannot connect reset for irq_mapper_001.sender
+Info: ARM_A9_HPS: "Running  for module: ARM_A9_HPS"
+Info: ARM_A9_HPS: HPS Main PLL counter settings: n = 0  m = 73
+Info: ARM_A9_HPS: HPS peripherial PLL counter settings: n = 0  m = 39
+Warning: ARM_A9_HPS: "Configuration/HPS-to-FPGA user 0 clock frequency" (desired_cfg_clk_mhz) requested 100.0 MHz, but only achieved 97.368421 MHz
+Warning: ARM_A9_HPS: 1 or more output clock frequencies cannot be achieved precisely, consider revising desired output clock frequencies.
+Info: ARM_A9_HPS: "lab1_system" instantiated altera_hps "ARM_A9_HPS"
+Info: JTAG_UART: Starting RTL generation for module 'lab1_system_JTAG_UART'
+Info: JTAG_UART:   Generation command is [exec /tools/intel/FPGA/21.1/quartus/linux64/perl/bin/perl -I /tools/intel/FPGA/21.1/quartus/linux64/perl/lib -I /tools/intel/FPGA/21.1/quartus/sopc_builder/bin/europa -I /tools/intel/FPGA/21.1/quartus/sopc_builder/bin -I /tools/intel/FPGA/21.1/quartus/../ip/altera/sopc_builder_ip/common -I /tools/intel/FPGA/21.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_jtag_uart -- /tools/intel/FPGA/21.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_jtag_uart/generate_rtl.pl --name=lab1_system_JTAG_UART --dir=/tmp/alt0510_5968299585108038764.dir/0002_JTAG_UART_gen/ --quartus_dir=/tools/intel/FPGA/21.1/quartus --verilog --config=/tmp/alt0510_5968299585108038764.dir/0002_JTAG_UART_gen//lab1_system_JTAG_UART_component_configuration.pl  --do_build_sim=0  ]
+Info: JTAG_UART: Done RTL generation for module 'lab1_system_JTAG_UART'
+Info: JTAG_UART: "lab1_system" instantiated altera_avalon_jtag_uart "JTAG_UART"
+Info: System_PLL: "lab1_system" instantiated altera_up_avalon_sys_sdram_pll "System_PLL"
+Info: avalon_st_adapter: Inserting error_adapter: error_adapter_0
+Info: mm_interconnect_0: "lab1_system" instantiated altera_mm_interconnect "mm_interconnect_0"
+Info: irq_mapper: "lab1_system" instantiated altera_irq_mapper "irq_mapper"
+Info: irq_mapper_001: "lab1_system" instantiated altera_irq_mapper "irq_mapper_001"
+Info: rst_controller: "lab1_system" instantiated altera_reset_controller "rst_controller"
+Info: fpga_interfaces: "ARM_A9_HPS" instantiated altera_interface_generator "fpga_interfaces"
+Info: hps_io: "ARM_A9_HPS" instantiated altera_hps_io "hps_io"
+Info: sys_pll: "System_PLL" instantiated altera_pll "sys_pll"
+Info: reset_from_locked: "System_PLL" instantiated altera_up_avalon_reset_from_locked_signal "reset_from_locked"
+Info: JTAG_UART_avalon_jtag_slave_translator: "mm_interconnect_0" instantiated altera_merlin_slave_translator "JTAG_UART_avalon_jtag_slave_translator"
+Info: ARM_A9_HPS_h2f_lw_axi_master_agent: "mm_interconnect_0" instantiated altera_merlin_axi_master_ni "ARM_A9_HPS_h2f_lw_axi_master_agent"
+Info: JTAG_UART_avalon_jtag_slave_agent: "mm_interconnect_0" instantiated altera_merlin_slave_agent "JTAG_UART_avalon_jtag_slave_agent"
+Info: JTAG_UART_avalon_jtag_slave_agent_rsp_fifo: "mm_interconnect_0" instantiated altera_avalon_sc_fifo "JTAG_UART_avalon_jtag_slave_agent_rsp_fifo"
+Info: router: "mm_interconnect_0" instantiated altera_merlin_router "router"
+Info: router_002: "mm_interconnect_0" instantiated altera_merlin_router "router_002"
+Info: JTAG_UART_avalon_jtag_slave_burst_adapter: "mm_interconnect_0" instantiated altera_merlin_burst_adapter "JTAG_UART_avalon_jtag_slave_burst_adapter"
+Info: Reusing file /home/alumnes/s/serik.perez/hdd/lab1/lab1_system/synthesis/submodules/altera_merlin_address_alignment.sv
+Info: cmd_demux: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "cmd_demux"
+Info: cmd_mux: "mm_interconnect_0" instantiated altera_merlin_multiplexer "cmd_mux"
+Info: rsp_demux: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "rsp_demux"
+Info: rsp_mux: "mm_interconnect_0" instantiated altera_merlin_multiplexer "rsp_mux"
+Info: Reusing file /home/alumnes/s/serik.perez/hdd/lab1/lab1_system/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: avalon_st_adapter: "mm_interconnect_0" instantiated altera_avalon_st_adapter "avalon_st_adapter"
+Info: border: "hps_io" instantiated altera_interface_generator "border"
+Info: error_adapter_0: "avalon_st_adapter" instantiated error_adapter "error_adapter_0"
+Info: lab1_system: Done "lab1_system" with 26 modules, 85 files
+Info: qsys-generate succeeded.
+Info: Finished: Create HDL design files for synthesis
