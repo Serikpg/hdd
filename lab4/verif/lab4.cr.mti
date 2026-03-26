@@ -1,0 +1,8 @@
+/home/alumnes/s/serik.perez/hdd/lab4/rtl/booth.sv {1 {vlog -work work -vopt -sv -stats=none /home/alumnes/s/serik.perez/hdd/lab4/rtl/booth.sv
+QuestaSim vlog 2021.3_2 Compiler 2021.09 Sep 10 2021
+-- Compiling module booth
+
+Top level modules:
+	booth
+
+} {} {}}

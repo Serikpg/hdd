@@ -10,8 +10,6 @@ module booth(
   output [31:0]   result   // result of the multiplication
 );
 
-logic         busy_f;
-logic         irq_f;
 logic [3:0]   state;
 logic [32:0]  result_f;
 
@@ -24,12 +22,18 @@ logic [16:0]  upper_sum;
 // state will serve as counter indexing combinational shifters
 always_ff @(posedge clk) begin
   // on synch reset or on ack return to the INITAL state 3'h0
-  if ((!resetn) || (ack == 1'b1)) begin
+  if (!resetn) begin
     state <= '0;
   end else begin
-    if (start) begin
-      state <= 3'h1;
-    end else if (state < 4'h9) begin
+    if (state == 4'h0) begin
+      if (start) begin
+        state <= 4'h1;
+      end
+    end else if (state == 4'h9) begin
+      if (ack == 1'b1) begin
+        state <= '0;
+      end
+    end else begin
       state <= state + 4'h1;
     end
     // hold final state when reaching 3'h9
@@ -55,19 +59,15 @@ end
 
 // result will be a shift register
 always_ff @(posedge clk) begin
-  if ((!reset) || ack) begin
+  if (state == 4'h0) begin
     result_f <= {16'h0, data_a, 1'b0};
-  end else begin
-    if (start) begin
-      result_f <= {16'h0000, data_a, 1'b0};
-    end else if ((state > 4'h0) && (state < 4'h9)) begin
-      result_f <= {upper_sum[16], upper_sum[16], upper_sum, result_f[15:2]};
-    end
+  end else if (state != 4'h9) begin
+    result_f <= {upper_sum[16], upper_sum[16], upper_sum, result_f[15:2]};
   end
 end
 
-assign result = result_f[32:1]; // we may need to drop the final bit to get actual result
-assign busy = ((state != 3'h0) && (state != 3'h9));
-assign irq = (state == 3'h9);
+assign result = result_f[31:0]; // we may need to drop the final bit to get actual result
+assign busy = (state != 4'h0);
+assign irq = (state == 4'h9);
 
 endmodule
