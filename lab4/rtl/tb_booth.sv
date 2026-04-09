@@ -18,7 +18,7 @@ module tb_booth;
 		##5;
 		start = 1'b1;
 		wait(irq);
-		## 4;
+		##4;
 		ack = 1'b1;
 		wait(!busy);
 		start = 0;
@@ -47,11 +47,48 @@ module tb_booth;
 
 		##5; // after 5 cycles
 		resetn = 1;
-
 		##20;
 		
-		setoperands(15'd2, 15'd3);
-		
+		// Positive x Positive
+		$display("[TEST] Positive x Positive\n");
+		setoperands(15'sd3, 15'sd5);
+		$display("Result: %0d, Expected: %0d\n", result, 15'sd3 * 15'sd5);
+
+		// Negative x Positive
+		$display("[TEST] Negative x Positive\n");
+		setoperands(-15'sd10, 15'sd6);
+		$display("Result: %0d, Expected: %0d\n", result, -15'sd10 * 15'sd6);
+
+		// Positive x Negative
+		$display("[TEST] Positive x Negative\n");
+		setoperands(15'sd16, -15'sd3);
+		$display("Result: %0d, Expected: %0d\n", result, 15'sd16 * -15'sd3);
+
+		// Negative x Negative
+		$display("[TEST] Negative x Negative\n");
+		setoperands(-15'sd10, -15'sd4);
+		$display("Result: %0d, Expected: %0d\n", result, -15'sd10 * -15'sd4);
+
+		// Zero x Positive
+		$display("[TEST] Positive x Zero\n");
+		setoperands(15'sd30, 15'sd0);
+		$display("Result: %0d, Expected: %0d\n", result, 15'sd30 * 15'sd0);
+
+		// Zero x Negative
+		$display("[TEST] Negative x Zero\n");
+		setoperands(-15'sd20, 15'sd0);
+		$display("Result: %0d, Expected: %0d\n", result, -15'sd20 * 15'sd0);
+
+		$display("[TEST] ----------\n");
+		setoperands(15'sd28, 15'sd2);
+		$display("Result: %0d, Expected: %0d\n", result, 15'sd28 * 15'sd2);
+
+		$display("[TEST] ----------\n");
+		setoperands(15'sd20, 15'sd5);
+		$display("Result: %0d, Expected: %0d\n", result, 15'sd20 * 15'sd5);
+
+		$display("All tests finished\n");
+
 		##10;
 	end
 endmodule
