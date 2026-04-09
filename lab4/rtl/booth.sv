@@ -14,10 +14,20 @@ logic [3:0]   state;
 logic [32:0]  result_f;
 
 logic [2:0]   window;
-logic [16:0]  mux_out;
+logic [17:0]  mux_out;
 logic         sub_ctrl;
-logic [16:0]  operand_b;
-logic [16:0]  upper_sum;
+logic [17:0]  operand_b;
+logic [17:0]  upper_sum;
+
+logic old_ack; 
+
+always_ff @(posedge clk) begin
+  if (!resetn) begin
+    old_ack <= '0; 
+  end else begin
+    old_ack <= ack;
+  end
+end
 
 // state will serve as counter indexing combinational shifters
 always_ff @(posedge clk) begin
@@ -26,11 +36,11 @@ always_ff @(posedge clk) begin
     state <= '0;
   end else begin
     if (state == 4'h0) begin
-      if (start) begin
+      if ((!ack) && start) begin
         state <= 4'h1;
       end
     end else if (state == 4'h9) begin
-      if (ack == 1'b1) begin
+      if ((old_ack == 1'b0) && (ack == 1'b1)) begin
         state <= '0;
       end
     end else begin
@@ -44,30 +54,31 @@ assign window = result_f[2:0];
 
 always_comb begin
     case (window)
-        3'b001, 3'b010: mux_out = {data_b[15], data_b };  // +1 * M
-        3'b011:         mux_out = {data_b, 1'b0 };        // +2 * M
-        3'b100:         mux_out = {data_b, 1'b0 };        // -2 * M
-        3'b101, 3'b110: mux_out = {data_b[15], data_b };  // -1 * M
-        default:        mux_out = 17'h0;                  // 0
+        3'b001, 3'b010: mux_out = {data_a[15], data_a[15], data_a };  // +1 * M
+        3'b011:         mux_out = {data_a[15], data_a, 1'b0 };        // +2 * M
+        3'b100:         mux_out = {data_a[15], data_a, 1'b0 };        // -2 * M
+        3'b101, 3'b110: mux_out = {data_a[15], data_a[15], data_a };  // -1 * M
+        default:        mux_out = '0;                  								// 0
     endcase
 
-    sub_ctrl = window[2]; // operation will be substraction when active
-    operand_b = mux_out ^ {17{sub_ctrl}};
-    upper_sum = result_f[32:16] + operand_b + sub_ctrl;
+		sub_ctrl  = window[2];
+    operand_b = mux_out ^ {18{sub_ctrl}};
+    upper_sum = {result_f[32], result_f[32], result_f[32:17]} + operand_b + {17'd0, sub_ctrl};
 end
 
 
 // result will be a shift register
 always_ff @(posedge clk) begin
   if (state == 4'h0) begin
-    result_f <= {16'h0, data_a, 1'b0};
+    result_f <= {16'd0, data_b, 1'b0};
   end else if (state != 4'h9) begin
-    result_f <= {upper_sum[16], upper_sum[16], upper_sum, result_f[15:2]};
+    result_f <= {upper_sum, result_f[16:2]};
   end
 end
 
-assign result = result_f[31:0]; // we may need to drop the final bit to get actual result
+assign result = result_f[32:1]; // we may need to drop the final bit to get actual result
 assign busy = (state != 4'h0);
 assign irq = (state == 4'h9);
+// assign irq = irq_enabled ? (state == 4'h9) : '0);
 
 endmodule
