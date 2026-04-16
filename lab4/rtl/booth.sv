@@ -1,13 +1,14 @@
 module booth(
-  input           clk    , // global clock signal, 100 MHz frequency
-  input           resetn , // global reset signal, active low
-  input           start  , // signal that activates the multiplication process by a rising edge
-  output          busy   , // output that indicates that a multiplication process is in progress
-  output          irq    , // IRQ signal activated when the multiplication has completed
-  input           ack    , // Input used to deassert the IRQ and busy outputs
-  input  [15:0]   data_a , // First 16-bit operand
-  input  [15:0]   data_b , // Second 16-bit operand
-  output [31:0]   result   // result of the multiplication
+  input           clk        , 	// global clock signal, 100 MHz frequency
+  input           resetn     , 	// global reset signal, active low
+  input           start      , 	// signal that activates the multiplication process by a rising edge
+  output          busy       , 	// output that indicates that a multiplication process is in progress
+  output          irq        , 	// IRQ signal activated when the multiplication has completed
+  input           ack        , 	// Input used to deassert the IRQ and busy outputs
+  input  [15:0]   data_a     , 	// First 16-bit operand
+  input  [15:0]   data_b     , 	// Second 16-bit operand
+  output [31:0]   result     , 	// result of the multiplication
+  input  	  irq_enable
 );
 
 logic [3:0]   state;
@@ -78,7 +79,7 @@ end
 
 assign result = result_f[32:1]; // we may need to drop the final bit to get actual result
 assign busy = (state != 4'h0);
-assign irq = (state == 4'h9);
+assign irq = ((state == 4'h9) && irq_enable);
 // assign irq = irq_enabled ? (state == 4'h9) : '0);
 
 endmodule
