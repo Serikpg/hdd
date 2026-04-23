@@ -31,9 +31,7 @@
 			memory_mem_dm               : out   std_logic_vector(3 downto 0);                     -- mem_dm
 			memory_oct_rzqin            : in    std_logic                     := 'X';             -- oct_rzqin
 			system_pll_ref_clk_clk      : in    std_logic                     := 'X';             -- clk
-			system_pll_ref_reset_reset  : in    std_logic                     := 'X';             -- reset
-			leds_readdata               : out   std_logic_vector(9 downto 0);                     -- readdata
-			pushbuttons_export          : in    std_logic_vector(3 downto 0)  := (others => 'X')  -- export
+			system_pll_ref_reset_reset  : in    std_logic                     := 'X'              -- reset
 		);
 	end component lab1_system;
 
@@ -70,8 +68,6 @@
 			memory_mem_dm               => CONNECTED_TO_memory_mem_dm,               --                     .mem_dm
 			memory_oct_rzqin            => CONNECTED_TO_memory_oct_rzqin,            --                     .oct_rzqin
 			system_pll_ref_clk_clk      => CONNECTED_TO_system_pll_ref_clk_clk,      --   system_pll_ref_clk.clk
-			system_pll_ref_reset_reset  => CONNECTED_TO_system_pll_ref_reset_reset,  -- system_pll_ref_reset.reset
-			leds_readdata               => CONNECTED_TO_leds_readdata,               --                 leds.readdata
-			pushbuttons_export          => CONNECTED_TO_pushbuttons_export           --          pushbuttons.export
+			system_pll_ref_reset_reset  => CONNECTED_TO_system_pll_ref_reset_reset   -- system_pll_ref_reset.reset
 		);
 

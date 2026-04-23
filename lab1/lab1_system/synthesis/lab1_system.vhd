@@ -22,7 +22,6 @@ entity lab1_system is
 		hps_io_hps_io_usb1_inst_NXT : in    std_logic                     := '0';             --                     .hps_io_usb1_inst_NXT
 		hps_io_hps_io_uart0_inst_RX : in    std_logic                     := '0';             --                     .hps_io_uart0_inst_RX
 		hps_io_hps_io_uart0_inst_TX : out   std_logic;                                        --                     .hps_io_uart0_inst_TX
-		leds_readdata               : out   std_logic_vector(9 downto 0);                     --                 leds.readdata
 		memory_mem_a                : out   std_logic_vector(14 downto 0);                    --               memory.mem_a
 		memory_mem_ba               : out   std_logic_vector(2 downto 0);                     --                     .mem_ba
 		memory_mem_ck               : out   std_logic;                                        --                     .mem_ck
@@ -39,7 +38,6 @@ entity lab1_system is
 		memory_mem_odt              : out   std_logic;                                        --                     .mem_odt
 		memory_mem_dm               : out   std_logic_vector(3 downto 0);                     --                     .mem_dm
 		memory_oct_rzqin            : in    std_logic                     := '0';             --                     .oct_rzqin
-		pushbuttons_export          : in    std_logic_vector(3 downto 0)  := (others => '0'); --          pushbuttons.export
 		system_pll_ref_clk_clk      : in    std_logic                     := '0';             --   system_pll_ref_clk.clk
 		system_pll_ref_reset_reset  : in    std_logic                     := '0'              -- system_pll_ref_reset.reset
 	);
@@ -217,20 +215,6 @@ architecture rtl of lab1_system is
 		);
 	end component lab1_system_JTAG_UART;
 
-	component lab1_system_Pushbuttons is
-		port (
-			clk        : in  std_logic                     := 'X';             -- clk
-			reset_n    : in  std_logic                     := 'X';             -- reset_n
-			address    : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- address
-			write_n    : in  std_logic                     := 'X';             -- write_n
-			writedata  : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
-			chipselect : in  std_logic                     := 'X';             -- chipselect
-			readdata   : out std_logic_vector(31 downto 0);                    -- readdata
-			in_port    : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- export
-			irq        : out std_logic                                         -- irq
-		);
-	end component lab1_system_Pushbuttons;
-
 	component lab1_system_System_PLL is
 		port (
 			ref_clk_clk        : in  std_logic := 'X'; -- clk
@@ -241,7 +225,7 @@ architecture rtl of lab1_system is
 		);
 	end component lab1_system_System_PLL;
 
-	component axi4_lite_count28 is
+	component axi4_lite_booth is
 		generic (
 			C_S_AXI_DATA_WIDTH : integer := 32;
 			C_S_AXI_ADDR_WIDTH : integer := 4
@@ -249,7 +233,7 @@ architecture rtl of lab1_system is
 		port (
 			clk                : in  std_logic                     := 'X';             -- clk
 			reset_n            : in  std_logic                     := 'X';             -- reset_n
-			out_leds           : out std_logic_vector(9 downto 0);                     -- readdata
+			irq                : out std_logic;                                        -- writeresponsevalid_n
 			axs_s0_AXI_AWADDR  : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- awaddr
 			axs_s0_AXI_AWPROT  : in  std_logic_vector(2 downto 0)  := (others => 'X'); -- awprot
 			axs_s0_AXI_AWVALID : in  std_logic                     := 'X';             -- awvalid
@@ -270,7 +254,7 @@ architecture rtl of lab1_system is
 			axs_s0_AXI_RVALID  : out std_logic;                                        -- rvalid
 			axs_s0_AXI_RREADY  : in  std_logic                     := 'X'              -- rready
 		);
-	end component axi4_lite_count28;
+	end component axi4_lite_booth;
 
 	component lab1_system_mm_interconnect_0 is
 		port (
@@ -310,41 +294,35 @@ architecture rtl of lab1_system is
 			ARM_A9_HPS_h2f_lw_axi_master_rlast                                       : out std_logic;                                        -- rlast
 			ARM_A9_HPS_h2f_lw_axi_master_rvalid                                      : out std_logic;                                        -- rvalid
 			ARM_A9_HPS_h2f_lw_axi_master_rready                                      : in  std_logic                     := 'X';             -- rready
-			axi4_lite_count28_0_axi4_lite_awaddr                                     : out std_logic_vector(3 downto 0);                     -- awaddr
-			axi4_lite_count28_0_axi4_lite_awprot                                     : out std_logic_vector(2 downto 0);                     -- awprot
-			axi4_lite_count28_0_axi4_lite_awvalid                                    : out std_logic;                                        -- awvalid
-			axi4_lite_count28_0_axi4_lite_awready                                    : in  std_logic                     := 'X';             -- awready
-			axi4_lite_count28_0_axi4_lite_wdata                                      : out std_logic_vector(31 downto 0);                    -- wdata
-			axi4_lite_count28_0_axi4_lite_wstrb                                      : out std_logic_vector(3 downto 0);                     -- wstrb
-			axi4_lite_count28_0_axi4_lite_wvalid                                     : out std_logic;                                        -- wvalid
-			axi4_lite_count28_0_axi4_lite_wready                                     : in  std_logic                     := 'X';             -- wready
-			axi4_lite_count28_0_axi4_lite_bresp                                      : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- bresp
-			axi4_lite_count28_0_axi4_lite_bvalid                                     : in  std_logic                     := 'X';             -- bvalid
-			axi4_lite_count28_0_axi4_lite_bready                                     : out std_logic;                                        -- bready
-			axi4_lite_count28_0_axi4_lite_araddr                                     : out std_logic_vector(3 downto 0);                     -- araddr
-			axi4_lite_count28_0_axi4_lite_arprot                                     : out std_logic_vector(2 downto 0);                     -- arprot
-			axi4_lite_count28_0_axi4_lite_arvalid                                    : out std_logic;                                        -- arvalid
-			axi4_lite_count28_0_axi4_lite_arready                                    : in  std_logic                     := 'X';             -- arready
-			axi4_lite_count28_0_axi4_lite_rdata                                      : in  std_logic_vector(31 downto 0) := (others => 'X'); -- rdata
-			axi4_lite_count28_0_axi4_lite_rresp                                      : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- rresp
-			axi4_lite_count28_0_axi4_lite_rvalid                                     : in  std_logic                     := 'X';             -- rvalid
-			axi4_lite_count28_0_axi4_lite_rready                                     : out std_logic;                                        -- rready
+			axi4_lite_booth_0_axi4_lite_awaddr                                       : out std_logic_vector(3 downto 0);                     -- awaddr
+			axi4_lite_booth_0_axi4_lite_awprot                                       : out std_logic_vector(2 downto 0);                     -- awprot
+			axi4_lite_booth_0_axi4_lite_awvalid                                      : out std_logic;                                        -- awvalid
+			axi4_lite_booth_0_axi4_lite_awready                                      : in  std_logic                     := 'X';             -- awready
+			axi4_lite_booth_0_axi4_lite_wdata                                        : out std_logic_vector(31 downto 0);                    -- wdata
+			axi4_lite_booth_0_axi4_lite_wstrb                                        : out std_logic_vector(3 downto 0);                     -- wstrb
+			axi4_lite_booth_0_axi4_lite_wvalid                                       : out std_logic;                                        -- wvalid
+			axi4_lite_booth_0_axi4_lite_wready                                       : in  std_logic                     := 'X';             -- wready
+			axi4_lite_booth_0_axi4_lite_bresp                                        : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- bresp
+			axi4_lite_booth_0_axi4_lite_bvalid                                       : in  std_logic                     := 'X';             -- bvalid
+			axi4_lite_booth_0_axi4_lite_bready                                       : out std_logic;                                        -- bready
+			axi4_lite_booth_0_axi4_lite_araddr                                       : out std_logic_vector(3 downto 0);                     -- araddr
+			axi4_lite_booth_0_axi4_lite_arprot                                       : out std_logic_vector(2 downto 0);                     -- arprot
+			axi4_lite_booth_0_axi4_lite_arvalid                                      : out std_logic;                                        -- arvalid
+			axi4_lite_booth_0_axi4_lite_arready                                      : in  std_logic                     := 'X';             -- arready
+			axi4_lite_booth_0_axi4_lite_rdata                                        : in  std_logic_vector(31 downto 0) := (others => 'X'); -- rdata
+			axi4_lite_booth_0_axi4_lite_rresp                                        : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- rresp
+			axi4_lite_booth_0_axi4_lite_rvalid                                       : in  std_logic                     := 'X';             -- rvalid
+			axi4_lite_booth_0_axi4_lite_rready                                       : out std_logic;                                        -- rready
 			System_PLL_sys_clk_clk                                                   : in  std_logic                     := 'X';             -- clk
 			ARM_A9_HPS_h2f_lw_axi_master_agent_clk_reset_reset_bridge_in_reset_reset : in  std_logic                     := 'X';             -- reset
 			JTAG_UART_reset_reset_bridge_in_reset_reset                              : in  std_logic                     := 'X';             -- reset
-			Pushbuttons_reset_reset_bridge_in_reset_reset                            : in  std_logic                     := 'X';             -- reset
 			JTAG_UART_avalon_jtag_slave_address                                      : out std_logic_vector(0 downto 0);                     -- address
 			JTAG_UART_avalon_jtag_slave_write                                        : out std_logic;                                        -- write
 			JTAG_UART_avalon_jtag_slave_read                                         : out std_logic;                                        -- read
 			JTAG_UART_avalon_jtag_slave_readdata                                     : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
 			JTAG_UART_avalon_jtag_slave_writedata                                    : out std_logic_vector(31 downto 0);                    -- writedata
 			JTAG_UART_avalon_jtag_slave_waitrequest                                  : in  std_logic                     := 'X';             -- waitrequest
-			JTAG_UART_avalon_jtag_slave_chipselect                                   : out std_logic;                                        -- chipselect
-			Pushbuttons_s1_address                                                   : out std_logic_vector(1 downto 0);                     -- address
-			Pushbuttons_s1_write                                                     : out std_logic;                                        -- write
-			Pushbuttons_s1_readdata                                                  : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
-			Pushbuttons_s1_writedata                                                 : out std_logic_vector(31 downto 0);                    -- writedata
-			Pushbuttons_s1_chipselect                                                : out std_logic                                         -- chipselect
+			JTAG_UART_avalon_jtag_slave_chipselect                                   : out std_logic                                         -- chipselect
 		);
 	end component lab1_system_mm_interconnect_0;
 
@@ -498,7 +476,7 @@ architecture rtl of lab1_system is
 		);
 	end component lab1_system_rst_controller_001;
 
-	signal system_pll_sys_clk_clk                                        : std_logic;                     -- System_PLL:sys_clk_clk -> [ARM_A9_HPS:f2h_axi_clk, ARM_A9_HPS:h2f_axi_clk, ARM_A9_HPS:h2f_lw_axi_clk, JTAG_UART:clk, Pushbuttons:clk, axi4_lite_count28_0:clk, mm_interconnect_0:System_PLL_sys_clk_clk, rst_controller:clk, rst_controller_001:clk, rst_controller_002:clk]
+	signal system_pll_sys_clk_clk                                        : std_logic;                     -- System_PLL:sys_clk_clk -> [ARM_A9_HPS:f2h_axi_clk, ARM_A9_HPS:h2f_axi_clk, ARM_A9_HPS:h2f_lw_axi_clk, JTAG_UART:clk, axi4_lite_booth_0:clk, mm_interconnect_0:System_PLL_sys_clk_clk, rst_controller:clk, rst_controller_001:clk]
 	signal arm_a9_hps_h2f_lw_axi_master_awburst                          : std_logic_vector(1 downto 0);  -- ARM_A9_HPS:h2f_lw_AWBURST -> mm_interconnect_0:ARM_A9_HPS_h2f_lw_axi_master_awburst
 	signal arm_a9_hps_h2f_lw_axi_master_arlen                            : std_logic_vector(3 downto 0);  -- ARM_A9_HPS:h2f_lw_ARLEN -> mm_interconnect_0:ARM_A9_HPS_h2f_lw_axi_master_arlen
 	signal arm_a9_hps_h2f_lw_axi_master_wstrb                            : std_logic_vector(3 downto 0);  -- ARM_A9_HPS:h2f_lw_WSTRB -> mm_interconnect_0:ARM_A9_HPS_h2f_lw_axi_master_wstrb
@@ -542,45 +520,36 @@ architecture rtl of lab1_system is
 	signal mm_interconnect_0_jtag_uart_avalon_jtag_slave_read            : std_logic;                     -- mm_interconnect_0:JTAG_UART_avalon_jtag_slave_read -> mm_interconnect_0_jtag_uart_avalon_jtag_slave_read:in
 	signal mm_interconnect_0_jtag_uart_avalon_jtag_slave_write           : std_logic;                     -- mm_interconnect_0:JTAG_UART_avalon_jtag_slave_write -> mm_interconnect_0_jtag_uart_avalon_jtag_slave_write:in
 	signal mm_interconnect_0_jtag_uart_avalon_jtag_slave_writedata       : std_logic_vector(31 downto 0); -- mm_interconnect_0:JTAG_UART_avalon_jtag_slave_writedata -> JTAG_UART:av_writedata
-	signal mm_interconnect_0_axi4_lite_count28_0_axi4_lite_awaddr        : std_logic_vector(3 downto 0);  -- mm_interconnect_0:axi4_lite_count28_0_axi4_lite_awaddr -> axi4_lite_count28_0:axs_s0_AXI_AWADDR
-	signal mm_interconnect_0_axi4_lite_count28_0_axi4_lite_bresp         : std_logic_vector(1 downto 0);  -- axi4_lite_count28_0:axs_s0_AXI_BRESP -> mm_interconnect_0:axi4_lite_count28_0_axi4_lite_bresp
-	signal mm_interconnect_0_axi4_lite_count28_0_axi4_lite_arready       : std_logic;                     -- axi4_lite_count28_0:axs_s0_AXI_ARREADY -> mm_interconnect_0:axi4_lite_count28_0_axi4_lite_arready
-	signal mm_interconnect_0_axi4_lite_count28_0_axi4_lite_rdata         : std_logic_vector(31 downto 0); -- axi4_lite_count28_0:axs_s0_AXI_RDATA -> mm_interconnect_0:axi4_lite_count28_0_axi4_lite_rdata
-	signal mm_interconnect_0_axi4_lite_count28_0_axi4_lite_wstrb         : std_logic_vector(3 downto 0);  -- mm_interconnect_0:axi4_lite_count28_0_axi4_lite_wstrb -> axi4_lite_count28_0:axs_s0_AXI_WSTRB
-	signal mm_interconnect_0_axi4_lite_count28_0_axi4_lite_wready        : std_logic;                     -- axi4_lite_count28_0:axs_s0_AXI_WREADY -> mm_interconnect_0:axi4_lite_count28_0_axi4_lite_wready
-	signal mm_interconnect_0_axi4_lite_count28_0_axi4_lite_awready       : std_logic;                     -- axi4_lite_count28_0:axs_s0_AXI_AWREADY -> mm_interconnect_0:axi4_lite_count28_0_axi4_lite_awready
-	signal mm_interconnect_0_axi4_lite_count28_0_axi4_lite_rready        : std_logic;                     -- mm_interconnect_0:axi4_lite_count28_0_axi4_lite_rready -> axi4_lite_count28_0:axs_s0_AXI_RREADY
-	signal mm_interconnect_0_axi4_lite_count28_0_axi4_lite_bready        : std_logic;                     -- mm_interconnect_0:axi4_lite_count28_0_axi4_lite_bready -> axi4_lite_count28_0:axs_s0_AXI_BREADY
-	signal mm_interconnect_0_axi4_lite_count28_0_axi4_lite_wvalid        : std_logic;                     -- mm_interconnect_0:axi4_lite_count28_0_axi4_lite_wvalid -> axi4_lite_count28_0:axs_s0_AXI_WVALID
-	signal mm_interconnect_0_axi4_lite_count28_0_axi4_lite_araddr        : std_logic_vector(3 downto 0);  -- mm_interconnect_0:axi4_lite_count28_0_axi4_lite_araddr -> axi4_lite_count28_0:axs_s0_AXI_ARADDR
-	signal mm_interconnect_0_axi4_lite_count28_0_axi4_lite_arprot        : std_logic_vector(2 downto 0);  -- mm_interconnect_0:axi4_lite_count28_0_axi4_lite_arprot -> axi4_lite_count28_0:axs_s0_AXI_ARPROT
-	signal mm_interconnect_0_axi4_lite_count28_0_axi4_lite_rresp         : std_logic_vector(1 downto 0);  -- axi4_lite_count28_0:axs_s0_AXI_RRESP -> mm_interconnect_0:axi4_lite_count28_0_axi4_lite_rresp
-	signal mm_interconnect_0_axi4_lite_count28_0_axi4_lite_awprot        : std_logic_vector(2 downto 0);  -- mm_interconnect_0:axi4_lite_count28_0_axi4_lite_awprot -> axi4_lite_count28_0:axs_s0_AXI_AWPROT
-	signal mm_interconnect_0_axi4_lite_count28_0_axi4_lite_wdata         : std_logic_vector(31 downto 0); -- mm_interconnect_0:axi4_lite_count28_0_axi4_lite_wdata -> axi4_lite_count28_0:axs_s0_AXI_WDATA
-	signal mm_interconnect_0_axi4_lite_count28_0_axi4_lite_arvalid       : std_logic;                     -- mm_interconnect_0:axi4_lite_count28_0_axi4_lite_arvalid -> axi4_lite_count28_0:axs_s0_AXI_ARVALID
-	signal mm_interconnect_0_axi4_lite_count28_0_axi4_lite_bvalid        : std_logic;                     -- axi4_lite_count28_0:axs_s0_AXI_BVALID -> mm_interconnect_0:axi4_lite_count28_0_axi4_lite_bvalid
-	signal mm_interconnect_0_axi4_lite_count28_0_axi4_lite_awvalid       : std_logic;                     -- mm_interconnect_0:axi4_lite_count28_0_axi4_lite_awvalid -> axi4_lite_count28_0:axs_s0_AXI_AWVALID
-	signal mm_interconnect_0_axi4_lite_count28_0_axi4_lite_rvalid        : std_logic;                     -- axi4_lite_count28_0:axs_s0_AXI_RVALID -> mm_interconnect_0:axi4_lite_count28_0_axi4_lite_rvalid
-	signal mm_interconnect_0_pushbuttons_s1_chipselect                   : std_logic;                     -- mm_interconnect_0:Pushbuttons_s1_chipselect -> Pushbuttons:chipselect
-	signal mm_interconnect_0_pushbuttons_s1_readdata                     : std_logic_vector(31 downto 0); -- Pushbuttons:readdata -> mm_interconnect_0:Pushbuttons_s1_readdata
-	signal mm_interconnect_0_pushbuttons_s1_address                      : std_logic_vector(1 downto 0);  -- mm_interconnect_0:Pushbuttons_s1_address -> Pushbuttons:address
-	signal mm_interconnect_0_pushbuttons_s1_write                        : std_logic;                     -- mm_interconnect_0:Pushbuttons_s1_write -> mm_interconnect_0_pushbuttons_s1_write:in
-	signal mm_interconnect_0_pushbuttons_s1_writedata                    : std_logic_vector(31 downto 0); -- mm_interconnect_0:Pushbuttons_s1_writedata -> Pushbuttons:writedata
+	signal mm_interconnect_0_axi4_lite_booth_0_axi4_lite_awaddr          : std_logic_vector(3 downto 0);  -- mm_interconnect_0:axi4_lite_booth_0_axi4_lite_awaddr -> axi4_lite_booth_0:axs_s0_AXI_AWADDR
+	signal mm_interconnect_0_axi4_lite_booth_0_axi4_lite_bresp           : std_logic_vector(1 downto 0);  -- axi4_lite_booth_0:axs_s0_AXI_BRESP -> mm_interconnect_0:axi4_lite_booth_0_axi4_lite_bresp
+	signal mm_interconnect_0_axi4_lite_booth_0_axi4_lite_arready         : std_logic;                     -- axi4_lite_booth_0:axs_s0_AXI_ARREADY -> mm_interconnect_0:axi4_lite_booth_0_axi4_lite_arready
+	signal mm_interconnect_0_axi4_lite_booth_0_axi4_lite_rdata           : std_logic_vector(31 downto 0); -- axi4_lite_booth_0:axs_s0_AXI_RDATA -> mm_interconnect_0:axi4_lite_booth_0_axi4_lite_rdata
+	signal mm_interconnect_0_axi4_lite_booth_0_axi4_lite_wstrb           : std_logic_vector(3 downto 0);  -- mm_interconnect_0:axi4_lite_booth_0_axi4_lite_wstrb -> axi4_lite_booth_0:axs_s0_AXI_WSTRB
+	signal mm_interconnect_0_axi4_lite_booth_0_axi4_lite_wready          : std_logic;                     -- axi4_lite_booth_0:axs_s0_AXI_WREADY -> mm_interconnect_0:axi4_lite_booth_0_axi4_lite_wready
+	signal mm_interconnect_0_axi4_lite_booth_0_axi4_lite_awready         : std_logic;                     -- axi4_lite_booth_0:axs_s0_AXI_AWREADY -> mm_interconnect_0:axi4_lite_booth_0_axi4_lite_awready
+	signal mm_interconnect_0_axi4_lite_booth_0_axi4_lite_rready          : std_logic;                     -- mm_interconnect_0:axi4_lite_booth_0_axi4_lite_rready -> axi4_lite_booth_0:axs_s0_AXI_RREADY
+	signal mm_interconnect_0_axi4_lite_booth_0_axi4_lite_bready          : std_logic;                     -- mm_interconnect_0:axi4_lite_booth_0_axi4_lite_bready -> axi4_lite_booth_0:axs_s0_AXI_BREADY
+	signal mm_interconnect_0_axi4_lite_booth_0_axi4_lite_wvalid          : std_logic;                     -- mm_interconnect_0:axi4_lite_booth_0_axi4_lite_wvalid -> axi4_lite_booth_0:axs_s0_AXI_WVALID
+	signal mm_interconnect_0_axi4_lite_booth_0_axi4_lite_araddr          : std_logic_vector(3 downto 0);  -- mm_interconnect_0:axi4_lite_booth_0_axi4_lite_araddr -> axi4_lite_booth_0:axs_s0_AXI_ARADDR
+	signal mm_interconnect_0_axi4_lite_booth_0_axi4_lite_arprot          : std_logic_vector(2 downto 0);  -- mm_interconnect_0:axi4_lite_booth_0_axi4_lite_arprot -> axi4_lite_booth_0:axs_s0_AXI_ARPROT
+	signal mm_interconnect_0_axi4_lite_booth_0_axi4_lite_rresp           : std_logic_vector(1 downto 0);  -- axi4_lite_booth_0:axs_s0_AXI_RRESP -> mm_interconnect_0:axi4_lite_booth_0_axi4_lite_rresp
+	signal mm_interconnect_0_axi4_lite_booth_0_axi4_lite_awprot          : std_logic_vector(2 downto 0);  -- mm_interconnect_0:axi4_lite_booth_0_axi4_lite_awprot -> axi4_lite_booth_0:axs_s0_AXI_AWPROT
+	signal mm_interconnect_0_axi4_lite_booth_0_axi4_lite_wdata           : std_logic_vector(31 downto 0); -- mm_interconnect_0:axi4_lite_booth_0_axi4_lite_wdata -> axi4_lite_booth_0:axs_s0_AXI_WDATA
+	signal mm_interconnect_0_axi4_lite_booth_0_axi4_lite_arvalid         : std_logic;                     -- mm_interconnect_0:axi4_lite_booth_0_axi4_lite_arvalid -> axi4_lite_booth_0:axs_s0_AXI_ARVALID
+	signal mm_interconnect_0_axi4_lite_booth_0_axi4_lite_bvalid          : std_logic;                     -- axi4_lite_booth_0:axs_s0_AXI_BVALID -> mm_interconnect_0:axi4_lite_booth_0_axi4_lite_bvalid
+	signal mm_interconnect_0_axi4_lite_booth_0_axi4_lite_awvalid         : std_logic;                     -- mm_interconnect_0:axi4_lite_booth_0_axi4_lite_awvalid -> axi4_lite_booth_0:axs_s0_AXI_AWVALID
+	signal mm_interconnect_0_axi4_lite_booth_0_axi4_lite_rvalid          : std_logic;                     -- axi4_lite_booth_0:axs_s0_AXI_RVALID -> mm_interconnect_0:axi4_lite_booth_0_axi4_lite_rvalid
 	signal irq_mapper_receiver0_irq                                      : std_logic;                     -- JTAG_UART:av_irq -> irq_mapper:receiver0_irq
-	signal irq_mapper_receiver1_irq                                      : std_logic;                     -- Pushbuttons:irq -> irq_mapper:receiver1_irq
 	signal arm_a9_hps_f2h_irq0_irq                                       : std_logic_vector(31 downto 0); -- irq_mapper:sender_irq -> ARM_A9_HPS:f2h_irq_p0
 	signal arm_a9_hps_f2h_irq1_irq                                       : std_logic_vector(31 downto 0); -- irq_mapper_001:sender_irq -> ARM_A9_HPS:f2h_irq_p1
 	signal rst_controller_reset_out_reset                                : std_logic;                     -- rst_controller:reset_out -> [mm_interconnect_0:JTAG_UART_reset_reset_bridge_in_reset_reset, rst_controller_reset_out_reset:in]
 	signal arm_a9_hps_h2f_reset_reset                                    : std_logic;                     -- ARM_A9_HPS:h2f_rst_n -> arm_a9_hps_h2f_reset_reset:in
-	signal system_pll_reset_source_reset                                 : std_logic;                     -- System_PLL:reset_source_reset -> [rst_controller:reset_in1, rst_controller_001:reset_in0]
-	signal rst_controller_001_reset_out_reset                            : std_logic;                     -- rst_controller_001:reset_out -> [mm_interconnect_0:Pushbuttons_reset_reset_bridge_in_reset_reset, rst_controller_001_reset_out_reset:in]
-	signal rst_controller_002_reset_out_reset                            : std_logic;                     -- rst_controller_002:reset_out -> mm_interconnect_0:ARM_A9_HPS_h2f_lw_axi_master_agent_clk_reset_reset_bridge_in_reset_reset
+	signal system_pll_reset_source_reset                                 : std_logic;                     -- System_PLL:reset_source_reset -> rst_controller:reset_in1
+	signal rst_controller_001_reset_out_reset                            : std_logic;                     -- rst_controller_001:reset_out -> mm_interconnect_0:ARM_A9_HPS_h2f_lw_axi_master_agent_clk_reset_reset_bridge_in_reset_reset
 	signal mm_interconnect_0_jtag_uart_avalon_jtag_slave_read_ports_inv  : std_logic;                     -- mm_interconnect_0_jtag_uart_avalon_jtag_slave_read:inv -> JTAG_UART:av_read_n
 	signal mm_interconnect_0_jtag_uart_avalon_jtag_slave_write_ports_inv : std_logic;                     -- mm_interconnect_0_jtag_uart_avalon_jtag_slave_write:inv -> JTAG_UART:av_write_n
-	signal mm_interconnect_0_pushbuttons_s1_write_ports_inv              : std_logic;                     -- mm_interconnect_0_pushbuttons_s1_write:inv -> Pushbuttons:write_n
-	signal rst_controller_reset_out_reset_ports_inv                      : std_logic;                     -- rst_controller_reset_out_reset:inv -> [JTAG_UART:rst_n, axi4_lite_count28_0:reset_n]
-	signal arm_a9_hps_h2f_reset_reset_ports_inv                          : std_logic;                     -- arm_a9_hps_h2f_reset_reset:inv -> [rst_controller:reset_in0, rst_controller_002:reset_in0]
-	signal rst_controller_001_reset_out_reset_ports_inv                  : std_logic;                     -- rst_controller_001_reset_out_reset:inv -> Pushbuttons:reset_n
+	signal rst_controller_reset_out_reset_ports_inv                      : std_logic;                     -- rst_controller_reset_out_reset:inv -> [JTAG_UART:rst_n, axi4_lite_booth_0:reset_n]
+	signal arm_a9_hps_h2f_reset_reset_ports_inv                          : std_logic;                     -- arm_a9_hps_h2f_reset_reset:inv -> [rst_controller:reset_in0, rst_controller_001:reset_in0]
 
 begin
 
@@ -753,19 +722,6 @@ begin
 			av_irq         => irq_mapper_receiver0_irq                                       --               irq.irq
 		);
 
-	pushbuttons : component lab1_system_Pushbuttons
-		port map (
-			clk        => system_pll_sys_clk_clk,                           --                 clk.clk
-			reset_n    => rst_controller_001_reset_out_reset_ports_inv,     --               reset.reset_n
-			address    => mm_interconnect_0_pushbuttons_s1_address,         --                  s1.address
-			write_n    => mm_interconnect_0_pushbuttons_s1_write_ports_inv, --                    .write_n
-			writedata  => mm_interconnect_0_pushbuttons_s1_writedata,       --                    .writedata
-			chipselect => mm_interconnect_0_pushbuttons_s1_chipselect,      --                    .chipselect
-			readdata   => mm_interconnect_0_pushbuttons_s1_readdata,        --                    .readdata
-			in_port    => pushbuttons_export,                               -- external_connection.export
-			irq        => irq_mapper_receiver1_irq                          --                 irq.irq
-		);
-
 	system_pll : component lab1_system_System_PLL
 		port map (
 			ref_clk_clk        => system_pll_ref_clk_clk,        --      ref_clk.clk
@@ -775,34 +731,34 @@ begin
 			reset_source_reset => system_pll_reset_source_reset  -- reset_source.reset
 		);
 
-	axi4_lite_count28_0 : component axi4_lite_count28
+	axi4_lite_booth_0 : component axi4_lite_booth
 		generic map (
 			C_S_AXI_DATA_WIDTH => 32,
 			C_S_AXI_ADDR_WIDTH => 4
 		)
 		port map (
-			clk                => system_pll_sys_clk_clk,                                  --     clock.clk
-			reset_n            => rst_controller_reset_out_reset_ports_inv,                --     reset.reset_n
-			out_leds           => leds_readdata,                                           --  out_leds.readdata
-			axs_s0_AXI_AWADDR  => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_awaddr,  -- axi4_lite.awaddr
-			axs_s0_AXI_AWPROT  => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_awprot,  --          .awprot
-			axs_s0_AXI_AWVALID => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_awvalid, --          .awvalid
-			axs_s0_AXI_AWREADY => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_awready, --          .awready
-			axs_s0_AXI_WDATA   => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_wdata,   --          .wdata
-			axs_s0_AXI_WSTRB   => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_wstrb,   --          .wstrb
-			axs_s0_AXI_WVALID  => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_wvalid,  --          .wvalid
-			axs_s0_AXI_WREADY  => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_wready,  --          .wready
-			axs_s0_AXI_BRESP   => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_bresp,   --          .bresp
-			axs_s0_AXI_BVALID  => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_bvalid,  --          .bvalid
-			axs_s0_AXI_BREADY  => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_bready,  --          .bready
-			axs_s0_AXI_ARADDR  => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_araddr,  --          .araddr
-			axs_s0_AXI_ARPROT  => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_arprot,  --          .arprot
-			axs_s0_AXI_ARVALID => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_arvalid, --          .arvalid
-			axs_s0_AXI_ARREADY => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_arready, --          .arready
-			axs_s0_AXI_RDATA   => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_rdata,   --          .rdata
-			axs_s0_AXI_RRESP   => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_rresp,   --          .rresp
-			axs_s0_AXI_RVALID  => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_rvalid,  --          .rvalid
-			axs_s0_AXI_RREADY  => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_rready   --          .rready
+			clk                => system_pll_sys_clk_clk,                                --     clock.clk
+			reset_n            => rst_controller_reset_out_reset_ports_inv,              --     reset.reset_n
+			irq                => open,                                                  --       irq.writeresponsevalid_n
+			axs_s0_AXI_AWADDR  => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_awaddr,  -- axi4_lite.awaddr
+			axs_s0_AXI_AWPROT  => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_awprot,  --          .awprot
+			axs_s0_AXI_AWVALID => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_awvalid, --          .awvalid
+			axs_s0_AXI_AWREADY => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_awready, --          .awready
+			axs_s0_AXI_WDATA   => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_wdata,   --          .wdata
+			axs_s0_AXI_WSTRB   => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_wstrb,   --          .wstrb
+			axs_s0_AXI_WVALID  => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_wvalid,  --          .wvalid
+			axs_s0_AXI_WREADY  => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_wready,  --          .wready
+			axs_s0_AXI_BRESP   => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_bresp,   --          .bresp
+			axs_s0_AXI_BVALID  => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_bvalid,  --          .bvalid
+			axs_s0_AXI_BREADY  => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_bready,  --          .bready
+			axs_s0_AXI_ARADDR  => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_araddr,  --          .araddr
+			axs_s0_AXI_ARPROT  => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_arprot,  --          .arprot
+			axs_s0_AXI_ARVALID => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_arvalid, --          .arvalid
+			axs_s0_AXI_ARREADY => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_arready, --          .arready
+			axs_s0_AXI_RDATA   => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_rdata,   --          .rdata
+			axs_s0_AXI_RRESP   => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_rresp,   --          .rresp
+			axs_s0_AXI_RVALID  => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_rvalid,  --          .rvalid
+			axs_s0_AXI_RREADY  => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_rready   --          .rready
 		);
 
 	mm_interconnect_0 : component lab1_system_mm_interconnect_0
@@ -843,41 +799,35 @@ begin
 			ARM_A9_HPS_h2f_lw_axi_master_rlast                                       => arm_a9_hps_h2f_lw_axi_master_rlast,                        --                                                                   .rlast
 			ARM_A9_HPS_h2f_lw_axi_master_rvalid                                      => arm_a9_hps_h2f_lw_axi_master_rvalid,                       --                                                                   .rvalid
 			ARM_A9_HPS_h2f_lw_axi_master_rready                                      => arm_a9_hps_h2f_lw_axi_master_rready,                       --                                                                   .rready
-			axi4_lite_count28_0_axi4_lite_awaddr                                     => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_awaddr,    --                                      axi4_lite_count28_0_axi4_lite.awaddr
-			axi4_lite_count28_0_axi4_lite_awprot                                     => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_awprot,    --                                                                   .awprot
-			axi4_lite_count28_0_axi4_lite_awvalid                                    => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_awvalid,   --                                                                   .awvalid
-			axi4_lite_count28_0_axi4_lite_awready                                    => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_awready,   --                                                                   .awready
-			axi4_lite_count28_0_axi4_lite_wdata                                      => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_wdata,     --                                                                   .wdata
-			axi4_lite_count28_0_axi4_lite_wstrb                                      => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_wstrb,     --                                                                   .wstrb
-			axi4_lite_count28_0_axi4_lite_wvalid                                     => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_wvalid,    --                                                                   .wvalid
-			axi4_lite_count28_0_axi4_lite_wready                                     => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_wready,    --                                                                   .wready
-			axi4_lite_count28_0_axi4_lite_bresp                                      => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_bresp,     --                                                                   .bresp
-			axi4_lite_count28_0_axi4_lite_bvalid                                     => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_bvalid,    --                                                                   .bvalid
-			axi4_lite_count28_0_axi4_lite_bready                                     => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_bready,    --                                                                   .bready
-			axi4_lite_count28_0_axi4_lite_araddr                                     => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_araddr,    --                                                                   .araddr
-			axi4_lite_count28_0_axi4_lite_arprot                                     => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_arprot,    --                                                                   .arprot
-			axi4_lite_count28_0_axi4_lite_arvalid                                    => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_arvalid,   --                                                                   .arvalid
-			axi4_lite_count28_0_axi4_lite_arready                                    => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_arready,   --                                                                   .arready
-			axi4_lite_count28_0_axi4_lite_rdata                                      => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_rdata,     --                                                                   .rdata
-			axi4_lite_count28_0_axi4_lite_rresp                                      => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_rresp,     --                                                                   .rresp
-			axi4_lite_count28_0_axi4_lite_rvalid                                     => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_rvalid,    --                                                                   .rvalid
-			axi4_lite_count28_0_axi4_lite_rready                                     => mm_interconnect_0_axi4_lite_count28_0_axi4_lite_rready,    --                                                                   .rready
+			axi4_lite_booth_0_axi4_lite_awaddr                                       => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_awaddr,      --                                        axi4_lite_booth_0_axi4_lite.awaddr
+			axi4_lite_booth_0_axi4_lite_awprot                                       => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_awprot,      --                                                                   .awprot
+			axi4_lite_booth_0_axi4_lite_awvalid                                      => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_awvalid,     --                                                                   .awvalid
+			axi4_lite_booth_0_axi4_lite_awready                                      => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_awready,     --                                                                   .awready
+			axi4_lite_booth_0_axi4_lite_wdata                                        => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_wdata,       --                                                                   .wdata
+			axi4_lite_booth_0_axi4_lite_wstrb                                        => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_wstrb,       --                                                                   .wstrb
+			axi4_lite_booth_0_axi4_lite_wvalid                                       => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_wvalid,      --                                                                   .wvalid
+			axi4_lite_booth_0_axi4_lite_wready                                       => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_wready,      --                                                                   .wready
+			axi4_lite_booth_0_axi4_lite_bresp                                        => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_bresp,       --                                                                   .bresp
+			axi4_lite_booth_0_axi4_lite_bvalid                                       => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_bvalid,      --                                                                   .bvalid
+			axi4_lite_booth_0_axi4_lite_bready                                       => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_bready,      --                                                                   .bready
+			axi4_lite_booth_0_axi4_lite_araddr                                       => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_araddr,      --                                                                   .araddr
+			axi4_lite_booth_0_axi4_lite_arprot                                       => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_arprot,      --                                                                   .arprot
+			axi4_lite_booth_0_axi4_lite_arvalid                                      => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_arvalid,     --                                                                   .arvalid
+			axi4_lite_booth_0_axi4_lite_arready                                      => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_arready,     --                                                                   .arready
+			axi4_lite_booth_0_axi4_lite_rdata                                        => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_rdata,       --                                                                   .rdata
+			axi4_lite_booth_0_axi4_lite_rresp                                        => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_rresp,       --                                                                   .rresp
+			axi4_lite_booth_0_axi4_lite_rvalid                                       => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_rvalid,      --                                                                   .rvalid
+			axi4_lite_booth_0_axi4_lite_rready                                       => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_rready,      --                                                                   .rready
 			System_PLL_sys_clk_clk                                                   => system_pll_sys_clk_clk,                                    --                                                 System_PLL_sys_clk.clk
-			ARM_A9_HPS_h2f_lw_axi_master_agent_clk_reset_reset_bridge_in_reset_reset => rst_controller_002_reset_out_reset,                        -- ARM_A9_HPS_h2f_lw_axi_master_agent_clk_reset_reset_bridge_in_reset.reset
+			ARM_A9_HPS_h2f_lw_axi_master_agent_clk_reset_reset_bridge_in_reset_reset => rst_controller_001_reset_out_reset,                        -- ARM_A9_HPS_h2f_lw_axi_master_agent_clk_reset_reset_bridge_in_reset.reset
 			JTAG_UART_reset_reset_bridge_in_reset_reset                              => rst_controller_reset_out_reset,                            --                              JTAG_UART_reset_reset_bridge_in_reset.reset
-			Pushbuttons_reset_reset_bridge_in_reset_reset                            => rst_controller_001_reset_out_reset,                        --                            Pushbuttons_reset_reset_bridge_in_reset.reset
 			JTAG_UART_avalon_jtag_slave_address                                      => mm_interconnect_0_jtag_uart_avalon_jtag_slave_address,     --                                        JTAG_UART_avalon_jtag_slave.address
 			JTAG_UART_avalon_jtag_slave_write                                        => mm_interconnect_0_jtag_uart_avalon_jtag_slave_write,       --                                                                   .write
 			JTAG_UART_avalon_jtag_slave_read                                         => mm_interconnect_0_jtag_uart_avalon_jtag_slave_read,        --                                                                   .read
 			JTAG_UART_avalon_jtag_slave_readdata                                     => mm_interconnect_0_jtag_uart_avalon_jtag_slave_readdata,    --                                                                   .readdata
 			JTAG_UART_avalon_jtag_slave_writedata                                    => mm_interconnect_0_jtag_uart_avalon_jtag_slave_writedata,   --                                                                   .writedata
 			JTAG_UART_avalon_jtag_slave_waitrequest                                  => mm_interconnect_0_jtag_uart_avalon_jtag_slave_waitrequest, --                                                                   .waitrequest
-			JTAG_UART_avalon_jtag_slave_chipselect                                   => mm_interconnect_0_jtag_uart_avalon_jtag_slave_chipselect,  --                                                                   .chipselect
-			Pushbuttons_s1_address                                                   => mm_interconnect_0_pushbuttons_s1_address,                  --                                                     Pushbuttons_s1.address
-			Pushbuttons_s1_write                                                     => mm_interconnect_0_pushbuttons_s1_write,                    --                                                                   .write
-			Pushbuttons_s1_readdata                                                  => mm_interconnect_0_pushbuttons_s1_readdata,                 --                                                                   .readdata
-			Pushbuttons_s1_writedata                                                 => mm_interconnect_0_pushbuttons_s1_writedata,                --                                                                   .writedata
-			Pushbuttons_s1_chipselect                                                => mm_interconnect_0_pushbuttons_s1_chipselect                --                                                                   .chipselect
+			JTAG_UART_avalon_jtag_slave_chipselect                                   => mm_interconnect_0_jtag_uart_avalon_jtag_slave_chipselect   --                                                                   .chipselect
 		);
 
 	irq_mapper : component lab1_system_irq_mapper
@@ -885,7 +835,7 @@ begin
 			clk           => open,                     --       clk.clk
 			reset         => open,                     -- clk_reset.reset
 			receiver0_irq => irq_mapper_receiver0_irq, -- receiver0.irq
-			receiver1_irq => irq_mapper_receiver1_irq, -- receiver1.irq
+			receiver1_irq => open,                     -- receiver1.irq
 			sender_irq    => arm_a9_hps_f2h_irq0_irq   --    sender.irq
 		);
 
@@ -989,74 +939,9 @@ begin
 			ADAPT_RESET_REQUEST       => 0
 		)
 		port map (
-			reset_in0      => system_pll_reset_source_reset,      -- reset_in0.reset
-			clk            => system_pll_sys_clk_clk,             --       clk.clk
-			reset_out      => rst_controller_001_reset_out_reset, -- reset_out.reset
-			reset_req      => open,                               -- (terminated)
-			reset_req_in0  => '0',                                -- (terminated)
-			reset_in1      => '0',                                -- (terminated)
-			reset_req_in1  => '0',                                -- (terminated)
-			reset_in2      => '0',                                -- (terminated)
-			reset_req_in2  => '0',                                -- (terminated)
-			reset_in3      => '0',                                -- (terminated)
-			reset_req_in3  => '0',                                -- (terminated)
-			reset_in4      => '0',                                -- (terminated)
-			reset_req_in4  => '0',                                -- (terminated)
-			reset_in5      => '0',                                -- (terminated)
-			reset_req_in5  => '0',                                -- (terminated)
-			reset_in6      => '0',                                -- (terminated)
-			reset_req_in6  => '0',                                -- (terminated)
-			reset_in7      => '0',                                -- (terminated)
-			reset_req_in7  => '0',                                -- (terminated)
-			reset_in8      => '0',                                -- (terminated)
-			reset_req_in8  => '0',                                -- (terminated)
-			reset_in9      => '0',                                -- (terminated)
-			reset_req_in9  => '0',                                -- (terminated)
-			reset_in10     => '0',                                -- (terminated)
-			reset_req_in10 => '0',                                -- (terminated)
-			reset_in11     => '0',                                -- (terminated)
-			reset_req_in11 => '0',                                -- (terminated)
-			reset_in12     => '0',                                -- (terminated)
-			reset_req_in12 => '0',                                -- (terminated)
-			reset_in13     => '0',                                -- (terminated)
-			reset_req_in13 => '0',                                -- (terminated)
-			reset_in14     => '0',                                -- (terminated)
-			reset_req_in14 => '0',                                -- (terminated)
-			reset_in15     => '0',                                -- (terminated)
-			reset_req_in15 => '0'                                 -- (terminated)
-		);
-
-	rst_controller_002 : component lab1_system_rst_controller_001
-		generic map (
-			NUM_RESET_INPUTS          => 1,
-			OUTPUT_RESET_SYNC_EDGES   => "deassert",
-			SYNC_DEPTH                => 2,
-			RESET_REQUEST_PRESENT     => 0,
-			RESET_REQ_WAIT_TIME       => 1,
-			MIN_RST_ASSERTION_TIME    => 3,
-			RESET_REQ_EARLY_DSRT_TIME => 1,
-			USE_RESET_REQUEST_IN0     => 0,
-			USE_RESET_REQUEST_IN1     => 0,
-			USE_RESET_REQUEST_IN2     => 0,
-			USE_RESET_REQUEST_IN3     => 0,
-			USE_RESET_REQUEST_IN4     => 0,
-			USE_RESET_REQUEST_IN5     => 0,
-			USE_RESET_REQUEST_IN6     => 0,
-			USE_RESET_REQUEST_IN7     => 0,
-			USE_RESET_REQUEST_IN8     => 0,
-			USE_RESET_REQUEST_IN9     => 0,
-			USE_RESET_REQUEST_IN10    => 0,
-			USE_RESET_REQUEST_IN11    => 0,
-			USE_RESET_REQUEST_IN12    => 0,
-			USE_RESET_REQUEST_IN13    => 0,
-			USE_RESET_REQUEST_IN14    => 0,
-			USE_RESET_REQUEST_IN15    => 0,
-			ADAPT_RESET_REQUEST       => 0
-		)
-		port map (
 			reset_in0      => arm_a9_hps_h2f_reset_reset_ports_inv, -- reset_in0.reset
 			clk            => system_pll_sys_clk_clk,               --       clk.clk
-			reset_out      => rst_controller_002_reset_out_reset,   -- reset_out.reset
+			reset_out      => rst_controller_001_reset_out_reset,   -- reset_out.reset
 			reset_req      => open,                                 -- (terminated)
 			reset_req_in0  => '0',                                  -- (terminated)
 			reset_in1      => '0',                                  -- (terminated)
@@ -1095,12 +980,8 @@ begin
 
 	mm_interconnect_0_jtag_uart_avalon_jtag_slave_write_ports_inv <= not mm_interconnect_0_jtag_uart_avalon_jtag_slave_write;
 
-	mm_interconnect_0_pushbuttons_s1_write_ports_inv <= not mm_interconnect_0_pushbuttons_s1_write;
-
 	rst_controller_reset_out_reset_ports_inv <= not rst_controller_reset_out_reset;
 
 	arm_a9_hps_h2f_reset_reset_ports_inv <= not arm_a9_hps_h2f_reset_reset;
-
-	rst_controller_001_reset_out_reset_ports_inv <= not rst_controller_001_reset_out_reset;
 
 end architecture rtl; -- of lab1_system

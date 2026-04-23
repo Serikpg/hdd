@@ -1,0 +1,24 @@
+//  Catapult Ultra Synthesis 2021.1/950854 (Production Release) Mon Aug  2 21:36:02 PDT 2021
+//  
+//          Copyright (c) Siemens EDA, 1996-2021, All Rights Reserved.
+//                        UNPUBLISHED, LICENSED SOFTWARE.
+//             CONFIDENTIAL AND PROPRIETARY INFORMATION WHICH IS THE
+//                   PROPERTY OF SIEMENS EDA OR ITS LICENSORS.
+//  
+//  Running on Linux serik.perez@c5c6 6.8.0-51-generic x86_64 aol
+//  
+//  Package information: SIFLIBS v23.7_0.0, HLS_PKGS v23.7_0.0, 
+//                       SIF_TOOLKITS v23.7_0.0, SIF_XILINX v23.7_0.0, 
+//                       SIF_ALTERA v23.7_0.0, CCS_LIBS v23.7_0.0, 
+//                       CDS_PPRO v10.5a, CDS_DesigChecker v2021.1, 
+//                       CDS_OASYS v20.1_3.6, CDS_PSR v20.2_1.8, 
+//                       DesignPad v2.78_1.0
+//  
+if {[info script] != {} && [file isdirectory [file rootname [info script]]]} {
+  project load [file rootname [info script]] 2021.1
+} elseif { [file isdirectory /home/alumnes/s/serik.perez/hdd/lab6/Catapult] } {
+  project load /home/alumnes/s/serik.perez/hdd/lab6/Catapult 2021.1
+} else {
+  error {unable to locate project directory 'Catapult'}
+}
+

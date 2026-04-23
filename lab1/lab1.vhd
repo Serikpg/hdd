@@ -38,10 +38,10 @@ port(
 		HPS_UART_TX:			out std_logic;
 
 		-- Pushbuttons
-		KEY: 				in std_logic_vector(3 downto 0);
+		-- KEY: 				in std_logic_vector(3 downto 0);
 		
 		-- LEDs
-		LEDR: 				out std_logic_vector(9 downto 0)
+		-- LEDR: 				out std_logic_vector(9 downto 0)
 );
 end lab1;
 
@@ -122,8 +122,8 @@ begin
 			memory_oct_rzqin            => HPS_DDR3_RZQ,     	-- .oct_rzqin
 			system_pll_ref_clk_clk      => CLOCK_50,      		-- system_pll_ref_clk.clk
 			system_pll_ref_reset_reset  => '0',  			-- system_pll_ref_reset.reset
-			leds_readdata 		    => LEDR,			-- output that drives the LEDs
-			pushbuttons_export 	    => KEY 			-- pushbutton input
+			-- leds_readdata 		    => LEDR,			-- output that drives the LEDs
+			-- pushbuttons_export 	    => KEY 			-- pushbutton input
 		);
 
 end structural;	

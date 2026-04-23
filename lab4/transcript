@@ -1,0 +1,402 @@
+# //  Questa Sim
+# //  Version 2021.3_2 linux Sep 10 2021
+# //
+# //  Copyright 1991-2021 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading project lab4
+# Compile of tb_booth.sv was successful.
+# Compile of booth.sv was successful.
+# 2 compiles, 0 failed with no errors.
+# Compile of tb_booth.sv was successful.
+# Compile of booth.sv was successful.
+# 2 compiles, 0 failed with no errors.
+vsim work.tb_booth -voptargs=+acc
+# vsim work.tb_booth -voptargs="+acc" 
+# Start time: 17:07:40 on Apr 16,2026
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# Loading sv_std.std
+# Loading work.tb_booth(fast)
+# Loading work.booth(fast)
+run 8us
+# [TEST] Positive x Positive
+# 
+# starting task
+# Result: 5, Expected: 15
+# 
+# ** Error: not equal case pos x pos
+#    Time: 485 ns  Scope: tb_booth File: /home/alumnes/s/serik.perez/hdd/lab4/rtl/tb_booth.sv Line: 61
+# [TEST] Negative x Positive
+# 
+# starting task
+# Result: 6, Expected: -60
+# 
+# ** Error: not equal case neg x pos
+#    Time: 725 ns  Scope: tb_booth File: /home/alumnes/s/serik.perez/hdd/lab4/rtl/tb_booth.sv Line: 67
+# [TEST] Positive x Negative
+# 
+# starting task
+# Result: 65533, Expected: -48
+# 
+# ** Error: not equal case pos x neg
+#    Time: 965 ns  Scope: tb_booth File: /home/alumnes/s/serik.perez/hdd/lab4/rtl/tb_booth.sv Line: 73
+# [TEST] Negative x Negative
+# 
+# starting task
+# Result: 65532, Expected: 40
+# 
+# ** Error: not equal case neg x neg
+#    Time: 1205 ns  Scope: tb_booth File: /home/alumnes/s/serik.perez/hdd/lab4/rtl/tb_booth.sv Line: 79
+# [TEST] Positive x Zero
+# 
+# starting task
+# Result: 0, Expected: 0
+# 
+# [TEST] Negative x Zero
+# 
+# starting task
+# Result: 0, Expected: 0
+# 
+# [TEST] ----------
+# 
+# starting task
+# Result: 2, Expected: 56
+# 
+# ** Error: not equal case 28 x 2
+#    Time: 1925 ns  Scope: tb_booth File: /home/alumnes/s/serik.perez/hdd/lab4/rtl/tb_booth.sv Line: 96
+# [TEST] ----------
+# 
+# starting task
+# Result: 5, Expected: 100
+# 
+# ** Error: not equal case 20 x 5
+#    Time: 2165 ns  Scope: tb_booth File: /home/alumnes/s/serik.perez/hdd/lab4/rtl/tb_booth.sv Line: 101
+# All tests finished
+# 
+restart 
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# Loading work.tb_booth(fast)
+# Loading work.booth(fast)
+add wave -position insertpoint  \
+sim:/tb_booth/dut_booth_multiplier/ack \
+sim:/tb_booth/dut_booth_multiplier/clk \
+sim:/tb_booth/dut_booth_multiplier/data_a \
+sim:/tb_booth/dut_booth_multiplier/data_b \
+sim:/tb_booth/dut_booth_multiplier/resetn \
+sim:/tb_booth/dut_booth_multiplier/start \
+sim:/tb_booth/dut_booth_multiplier/busy \
+sim:/tb_booth/dut_booth_multiplier/irq \
+sim:/tb_booth/dut_booth_multiplier/result \
+sim:/tb_booth/dut_booth_multiplier/mux_out \
+sim:/tb_booth/dut_booth_multiplier/old_ack \
+sim:/tb_booth/dut_booth_multiplier/operand_b \
+sim:/tb_booth/dut_booth_multiplier/result_f \
+sim:/tb_booth/dut_booth_multiplier/state \
+sim:/tb_booth/dut_booth_multiplier/sub_ctrl \
+sim:/tb_booth/dut_booth_multiplier/upper_sum \
+sim:/tb_booth/dut_booth_multiplier/window
+run 8us
+# [TEST] Positive x Positive
+# 
+# starting task
+# Result: 5, Expected: 15
+# 
+# ** Error: not equal case pos x pos
+#    Time: 485 ns  Scope: tb_booth File: /home/alumnes/s/serik.perez/hdd/lab4/rtl/tb_booth.sv Line: 61
+# [TEST] Negative x Positive
+# 
+# starting task
+# Result: 6, Expected: -60
+# 
+# ** Error: not equal case neg x pos
+#    Time: 725 ns  Scope: tb_booth File: /home/alumnes/s/serik.perez/hdd/lab4/rtl/tb_booth.sv Line: 67
+# [TEST] Positive x Negative
+# 
+# starting task
+# Result: 65533, Expected: -48
+# 
+# ** Error: not equal case pos x neg
+#    Time: 965 ns  Scope: tb_booth File: /home/alumnes/s/serik.perez/hdd/lab4/rtl/tb_booth.sv Line: 73
+# [TEST] Negative x Negative
+# 
+# starting task
+# Result: 65532, Expected: 40
+# 
+# ** Error: not equal case neg x neg
+#    Time: 1205 ns  Scope: tb_booth File: /home/alumnes/s/serik.perez/hdd/lab4/rtl/tb_booth.sv Line: 79
+# [TEST] Positive x Zero
+# 
+# starting task
+# Result: 0, Expected: 0
+# 
+# [TEST] Negative x Zero
+# 
+# starting task
+# Result: 0, Expected: 0
+# 
+# [TEST] ----------
+# 
+# starting task
+# Result: 2, Expected: 56
+# 
+# ** Error: not equal case 28 x 2
+#    Time: 1925 ns  Scope: tb_booth File: /home/alumnes/s/serik.perez/hdd/lab4/rtl/tb_booth.sv Line: 96
+# [TEST] ----------
+# 
+# starting task
+# Result: 5, Expected: 100
+# 
+# ** Error: not equal case 20 x 5
+#    Time: 2165 ns  Scope: tb_booth File: /home/alumnes/s/serik.perez/hdd/lab4/rtl/tb_booth.sv Line: 101
+# All tests finished
+# 
+# Compile of tb_booth.sv was successful.
+# Compile of booth.sv was successful.
+# 2 compiles, 0 failed with no errors.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+ 
+
+# Loading sv_std.std
+# Loading work.tb_booth(fast)
+# Loading work.booth(fast)
+run 8us
+# [TEST] Positive x Positive
+# 
+# starting task
+# Result: 15, Expected: 15
+# 
+# [TEST] Negative x Positive
+# 
+# starting task
+# Result: -60, Expected: -60
+# 
+# [TEST] Positive x Negative
+# 
+# starting task
+# Result: -48, Expected: -48
+# 
+# [TEST] Negative x Negative
+# 
+# starting task
+# Result: 40, Expected: 40
+# 
+# [TEST] Positive x Zero
+# 
+# starting task
+# Result: 0, Expected: 0
+# 
+# [TEST] Negative x Zero
+# 
+# starting task
+# Result: 0, Expected: 0
+# 
+# [TEST] ----------
+# 
+# starting task
+# Result: 56, Expected: 56
+# 
+# [TEST] ----------
+# 
+# starting task
+# Result: 100, Expected: 100
+# 
+# All tests finished
+# 
+# Compile of tb_booth.sv was successful.
+# Compile of booth.sv was successful.
+# 2 compiles, 0 failed with no errors.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.tb_booth(fast)
+# Loading work.booth(fast)
+run 8us
+# [TEST] Positive x Positive
+# 
+# starting task
+# Result: 15, Expected: 15
+# 
+# [TEST] Negative x Positive
+# 
+# starting task
+# Result: -60, Expected: -60
+# 
+# [TEST] Positive x Negative
+# 
+# starting task
+# Result: -48, Expected: -48
+# 
+# [TEST] Negative x Negative
+# 
+# starting task
+# Result: 40, Expected: 40
+# 
+# [TEST] Positive x Zero
+# 
+# starting task
+# Result: 0, Expected: 0
+# 
+# [TEST] Negative x Zero
+# 
+# starting task
+# Result: 0, Expected: 0
+# 
+# [TEST] ----------
+# 
+# starting task
+# Result: 56, Expected: 56
+# 
+# [TEST] ----------
+# 
+# starting task
+# Result: 100, Expected: 100
+# 
+# All tests finished
+# 
+# Compile of tb_booth.sv was successful.
+# Compile of booth.sv was successful.
+# 2 compiles, 0 failed with no errors.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+ 
+
+# Loading sv_std.std
+# Loading work.tb_booth(fast)
+# Loading work.booth(fast)
+run 8us
+# [TEST] Positive x Positive
+# 
+# starting task
+# Result: 15, Expected: 15
+# 
+# [TEST] Negative x Positive
+# 
+# starting task
+# Result: -60, Expected: -60
+# 
+# Result: 6, Expected: -60
+# 
+# ** Error: not equal case neg x pos
+#    Time: 725 ns  Scope: tb_booth File: /home/alumnes/s/serik.perez/hdd/lab4/rtl/tb_booth.sv Line: 67
+# [TEST] Positive x Negative
+# 
+# starting task
+# Result: -48, Expected: -48
+# 
+# Result: 65533, Expected: -48
+# 
+# ** Error: not equal case pos x neg
+#    Time: 965 ns  Scope: tb_booth File: /home/alumnes/s/serik.perez/hdd/lab4/rtl/tb_booth.sv Line: 73
+# [TEST] Negative x Negative
+# 
+# starting task
+# Result: 40, Expected: 40
+# 
+# Result: 65532, Expected: 40
+# 
+# ** Error: not equal case neg x neg
+#    Time: 1205 ns  Scope: tb_booth File: /home/alumnes/s/serik.perez/hdd/lab4/rtl/tb_booth.sv Line: 79
+# [TEST] Positive x Zero
+# 
+# starting task
+# Result: 0, Expected: 0
+# 
+# Result: 0, Expected: 0
+# 
+# [TEST] Negative x Zero
+# 
+# starting task
+# Result: 0, Expected: 0
+# 
+# Result: 0, Expected: 0
+# 
+# [TEST] ----------
+# 
+# starting task
+# Result: 56, Expected: 56
+# 
+# Result: 2, Expected: 56
+# 
+# ** Error: not equal case 28 x 2
+#    Time: 1925 ns  Scope: tb_booth File: /home/alumnes/s/serik.perez/hdd/lab4/rtl/tb_booth.sv Line: 96
+# [TEST] ----------
+# 
+# starting task
+# Result: 100, Expected: 100
+# 
+# Result: 5, Expected: 100
+# 
+# ** Error: not equal case 20 x 5
+#    Time: 2165 ns  Scope: tb_booth File: /home/alumnes/s/serik.perez/hdd/lab4/rtl/tb_booth.sv Line: 101
+# All tests finished
+# 
+# A time value could not be extracted from the current line
+# Compile of tb_booth.sv was successful.
+# Compile of booth.sv was successful.
+# 2 compiles, 0 failed with no errors.
+restartt
+# invalid command name "restartt"
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.tb_booth(fast)
+# Loading work.booth(fast)
+run 8us
+# [TEST] Positive x Positive
+# 
+# starting task
+# Result: 15, Expected: 15
+# 
+# [TEST] Negative x Positive
+# 
+# starting task
+# Result: -60, Expected: -60
+# 
+# [TEST] Positive x Negative
+# 
+# starting task
+# Result: -48, Expected: -48
+# 
+# [TEST] Negative x Negative
+# 
+# starting task
+# Result: 40, Expected: 40
+# 
+# [TEST] Positive x Zero
+# 
+# starting task
+# Result: 0, Expected: 0
+# 
+# [TEST] Negative x Zero
+# 
+# starting task
+# Result: 0, Expected: 0
+# 
+# [TEST] ----------
+# 
+# starting task
+# Result: 56, Expected: 56
+# 
+# [TEST] ----------
+# 
+# starting task
+# Result: 100, Expected: 100
+# 
+# All tests finished
+# 
+# End time: 17:52:19 on Apr 16,2026, Elapsed time: 0:44:39
+# Errors: 0, Warnings: 1

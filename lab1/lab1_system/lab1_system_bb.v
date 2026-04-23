@@ -31,9 +31,7 @@ module lab1_system (
 	memory_mem_dm,
 	memory_oct_rzqin,
 	system_pll_ref_clk_clk,
-	system_pll_ref_reset_reset,
-	leds_readdata,
-	pushbuttons_export);	
+	system_pll_ref_reset_reset);	
 
 	inout		hps_io_hps_io_usb1_inst_D0;
 	inout		hps_io_hps_io_usb1_inst_D1;
@@ -67,6 +65,4 @@ module lab1_system (
 	input		memory_oct_rzqin;
 	input		system_pll_ref_clk_clk;
 	input		system_pll_ref_reset_reset;
-	output	[9:0]	leds_readdata;
-	input	[3:0]	pushbuttons_export;
 endmodule

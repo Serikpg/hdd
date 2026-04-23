@@ -1,0 +1,2 @@
+set_global_assignment -name SOURCE_TCL_SCRIPT_FILE /home/alumnes/s/serik.perez/hdd/lab6/Catapult_1/mult_add_pipeline.v9/quartus_concat_vhdl/concat_rtl.vhdl.aq.tcl
+

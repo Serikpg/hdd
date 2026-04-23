@@ -30,8 +30,6 @@
 		.memory_mem_dm               (<connected-to-memory_mem_dm>),               //                     .mem_dm
 		.memory_oct_rzqin            (<connected-to-memory_oct_rzqin>),            //                     .oct_rzqin
 		.system_pll_ref_clk_clk      (<connected-to-system_pll_ref_clk_clk>),      //   system_pll_ref_clk.clk
-		.system_pll_ref_reset_reset  (<connected-to-system_pll_ref_reset_reset>),  // system_pll_ref_reset.reset
-		.leds_readdata               (<connected-to-leds_readdata>),               //                 leds.readdata
-		.pushbuttons_export          (<connected-to-pushbuttons_export>)           //          pushbuttons.export
+		.system_pll_ref_reset_reset  (<connected-to-system_pll_ref_reset_reset>)   // system_pll_ref_reset.reset
 	);
 

@@ -1,0 +1,50 @@
+## HLS SP synthesis script
+## Generated for stage extract
+
+# Reporting settings
+puts "-- Requested 4 fractional digits for design 'mult_add_pipeline' timing"
+puts "-- Requested 4 fractional digits for design 'mult_add_pipeline' capacitance"
+puts "-- Characterization mode: p2p "
+puts "-- Requested custom transcript processing 'do not touch' for design 'mult_add_pipeline'"
+
+puts "-- Flow report: '/home/alumnes/s/serik.perez/hdd/lab6/Catapult_1/mult_add_pipeline.v5/quartus_v/mult_add_pipeline.flow.rpt' "
+puts "-- Timing report: '/home/alumnes/s/serik.perez/hdd/lab6/Catapult_1/mult_add_pipeline.v5/quartus_v/mult_add_pipeline.sta.rpt' "
+puts "-- Map report: '/home/alumnes/s/serik.perez/hdd/lab6/Catapult_1/mult_add_pipeline.v5/quartus_v/mult_add_pipeline.map.rpt' "
+puts "-- Fit report: '/home/alumnes/s/serik.perez/hdd/lab6/Catapult_1/mult_add_pipeline.v5/quartus_v/mult_add_pipeline.fit.rpt' "
+
+puts "-- Primary IO Resource IDs: 'a_rsc 1 b_rsc 2 c_rsc 3 result_rsc 6 gain_rsc 4 gain_adjust_rsc 5 __MGC__CTRL__ 0'"
+
+# Environment variable settings
+#    global env
+## Set the variable for file path prefixing 
+set RTL_TOOL_SCRIPT_DIR /home/alumnes/s/serik.perez/hdd/lab6/Catapult_1/mult_add_pipeline.v5/quartus_v
+set RTL_TOOL_SCRIPT_DIR [file dirname [file normalize [info script] ] ]
+puts "-- RTL_TOOL_SCRIPT_DIR is set to '$RTL_TOOL_SCRIPT_DIR' "
+set project_name mult_add_pipeline 
+if { ! [is_project_open] } {
+  if [project_exists $project_name] {
+    project_open $project_name
+  } else {
+    project_new $project_name
+  }
+  post_message "is_project_open=[is_project_open]"
+}
+source /home/alumnes/s/serik.perez/hdd/lab6/Catapult_1/mult_add_pipeline.v5/quartus_v/rtl.v.aq.tcl
+load_package flow
+if { [catch {execute_flow -compile} result] } {
+  puts "execute_flow -compile result : $result"
+  puts "ERROR: Compilation failed. See report files."
+  qexit -error
+} else {
+  puts "INFO: Compilation was successful."
+}
+if [catch {qexec "[file join $::quartus(binpath) quartus_sta] --multicorner=off --report_script=sta.rpt.tcl $project_name"} result] {
+  qexit -error
+} else {
+  puts "INFO: Custom STA was successful."
+}
+#----------------- Close Project -----------------#
+project_close
+
+#------ Quit Quartus returning success code ------#
+qexit -success

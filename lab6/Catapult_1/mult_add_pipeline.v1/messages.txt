@@ -1,0 +1,200 @@
+
+# Messages from "go new"
+
+
+# Messages from "go analyze"
+
+solution file add ./src/mult_add_pipeline.cpp
+/INPUTFILES/1
+solution file add ./src/tb.cpp
+/INPUTFILES/2
+solution file add ./src/mult_add_pipeline_ref.cpp
+/INPUTFILES/3
+solution file set /home/alumnes/s/serik.perez/hdd/lab6/src/tb.cpp -exclude true
+solution file set /home/alumnes/s/serik.perez/hdd/lab6/src/mult_add_pipeline.cpp -exclude true
+solution file set /home/alumnes/s/serik.perez/hdd/lab6/src/mult_add_pipeline.cpp -exclude false
+solution file set /home/alumnes/s/serik.perez/hdd/lab6/src/mult_add_pipeline_ref.cpp -exclude true
+go analyze
+# Info: Starting transformation 'analyze' on solution 'solution.v1' (SOL-8)
+Front End called with arguments: -- /home/alumnes/s/serik.perez/hdd/lab6/src/mult_add_pipeline.cpp (CIN-69)
+Edison Design Group C++/C Front End - Version 6.1 (CIN-1)
+Pragma 'hls_design<top>' detected on routine 'mult_add_pipeline' (CIN-6)
+Source file analysis completed (CIN-68)
+# Info: Completed transformation 'analyze' on solution 'solution.v1': elapsed time 0.68 seconds, memory usage 1241640kB, peak memory usage 1241640kB (SOL-9)
+
+# Messages from "go compile"
+
+go compile
+# Info: Starting transformation 'compile' on solution 'mult_add_pipeline.v1' (SOL-8)
+Generating synthesis internal form... (CIN-3)
+Found top design routine 'mult_add_pipeline' specified by directive (CIN-52)
+Synthesizing routine 'mult_add_pipeline' (CIN-13)
+Inlining routine 'mult_add_pipeline' (CIN-14)
+Inlining routine 'operator*<10, 2, true, AC_TRN, AC_WRAP, 26, false>' (CIN-14)
+Inlining routine 'operator<<<30, false>' (CIN-14)
+Optimizing block '/mult_add_pipeline' ... (CIN-4)
+INOUT port 'a' is only used as an input. (OPT-10)
+INOUT port 'b' is only used as an input. (OPT-10)
+INOUT port 'c' is only used as an input. (OPT-10)
+INOUT port 'result' is only used as an output. (OPT-11)
+Design 'mult_add_pipeline' was read (SOL-1)
+Makefile for Original Design + Testbench written to file './scverify/Verify_orig_cxx_osci.mk'
+# Info: CDesignChecker Shell script written to '/home/alumnes/s/serik.perez/hdd/lab6/Catapult_1/mult_add_pipeline.v1/CDesignChecker/design_checker.sh'
+# Info: Completed transformation 'compile' on solution 'mult_add_pipeline.v1': elapsed time 0.47 seconds, memory usage 1241640kB, peak memory usage 1241640kB (SOL-9)
+# Info: Design complexity at end of 'compile': Total ops = 15, Real ops = 4, Vars = 13 (SOL-21)
+
+# Messages from "go libraries"
+
+solution library add nangate-45nm_beh -- -rtlsyntool OasysRTL -vendor Nangate -technology 045nm
+go libraries
+# Info: Starting transformation 'libraries' on solution 'mult_add_pipeline.v1' (SOL-8)
+# Info: Please set ComponentLibs/TechLibSearchPath to enable flows that use downstream synthesis tools (LIB-220)
+Reading component library '$MGC_HOME/pkgs/siflibs/mgc_busdefs.lib' [mgc_busdefs]... (LIB-49)
+Reading component library '$MGC_HOME/pkgs/siflibs/stdops.lib' [STDOPS]... (LIB-49)
+Reading component library '$MGC_HOME/pkgs/siflibs/ccs_ioport.lib' [ccs_ioport]... (LIB-49)
+Reading component library '$MGC_HOME/pkgs/siflibs/mgc_ioport.lib' [mgc_ioport]... (LIB-49)
+Reading component library '$MGC_HOME/pkgs/cds_assert/assert_ops.lib' [ASSERT_OPS]... (LIB-49)
+Reading component library '$MGC_HOME/pkgs/cds_assert/assert_mods.lib' [assert_mods]... (LIB-49)
+Reading component library '$MGC_HOME/pkgs/siflibs/ccs_connections.lib' [ccs_connections]... (LIB-49)
+Reading component library '$MGC_HOME/pkgs/siflibs/nangate/nangate-45nm_beh.lib' [nangate-45nm_beh]... (LIB-49)
+# Info: Completed transformation 'libraries' on solution 'mult_add_pipeline.v1': elapsed time 0.17 seconds, memory usage 1241640kB, peak memory usage 1241640kB (SOL-9)
+# Info: Design complexity at end of 'libraries': Total ops = 15, Real ops = 4, Vars = 13 (SOL-21)
+
+# Messages from "go assembly"
+
+directive set -CLOCKS {clk {-CLOCK_PERIOD 1.11 -CLOCK_EDGE rising -CLOCK_HIGH_TIME 0.555 -CLOCK_OFFSET 0.000000 -CLOCK_UNCERTAINTY 0.0 -RESET_KIND sync -RESET_SYNC_NAME rst -RESET_SYNC_ACTIVE high -RESET_ASYNC_NAME arst_n -RESET_ASYNC_ACTIVE low -ENABLE_NAME {} -ENABLE_ACTIVE high}}
+/CLOCKS {clk {-CLOCK_PERIOD 1.11 -CLOCK_EDGE rising -CLOCK_HIGH_TIME 0.555 -CLOCK_OFFSET 0.000000 -CLOCK_UNCERTAINTY 0.0 -RESET_KIND sync -RESET_SYNC_NAME rst -RESET_SYNC_ACTIVE high -RESET_ASYNC_NAME arst_n -RESET_ASYNC_ACTIVE low -ENABLE_NAME {} -ENABLE_ACTIVE high}}
+go assembly
+# Info: Starting transformation 'assembly' on solution 'mult_add_pipeline.v1' (SOL-8)
+# Info: Completed transformation 'assembly' on solution 'mult_add_pipeline.v1': elapsed time 0.03 seconds, memory usage 1241640kB, peak memory usage 1241640kB (SOL-9)
+# Info: Design complexity at end of 'assembly': Total ops = 15, Real ops = 4, Vars = 13 (SOL-21)
+
+# Messages from "go architect"
+
+directive set /mult_add_pipeline/core -DESIGN_GOAL Area
+/mult_add_pipeline/core/DESIGN_GOAL area
+directive set /mult_add_pipeline/core/main -PIPELINE_INIT_INTERVAL 1
+/mult_add_pipeline/core/main/PIPELINE_INIT_INTERVAL 1
+go architect
+# Info: Starting transformation 'loops' on solution 'mult_add_pipeline.v1' (SOL-8)
+Loop '/mult_add_pipeline/core/main' is left rolled. (LOOP-4)
+# Info: Completed transformation 'loops' on solution 'mult_add_pipeline.v1': elapsed time 0.01 seconds, memory usage 1241640kB, peak memory usage 1241640kB (SOL-9)
+# Info: Design complexity at end of 'loops': Total ops = 19, Real ops = 4, Vars = 15 (SOL-21)
+# Info: Starting transformation 'memories' on solution 'mult_add_pipeline.v1' (SOL-8)
+I/O-Port Resource '/mult_add_pipeline/gain:rsc' (from var: gain) mapped to 'ccs_ioport.ccs_in' (size: 10). (MEM-2)
+I/O-Port Resource '/mult_add_pipeline/gain_adjust:rsc' (from var: gain_adjust) mapped to 'ccs_ioport.ccs_in' (size: 1). (MEM-2)
+# Info: Completed transformation 'memories' on solution 'mult_add_pipeline.v1': elapsed time 0.02 seconds, memory usage 1241640kB, peak memory usage 1241640kB (SOL-9)
+# Info: Design complexity at end of 'memories': Total ops = 20, Real ops = 4, Vars = 15 (SOL-21)
+# Info: Starting transformation 'cluster' on solution 'mult_add_pipeline.v1' (SOL-8)
+# Info: Completed transformation 'cluster' on solution 'mult_add_pipeline.v1': elapsed time 0.01 seconds, memory usage 1241640kB, peak memory usage 1241640kB (SOL-9)
+# Info: Design complexity at end of 'cluster': Total ops = 20, Real ops = 4, Vars = 15 (SOL-21)
+# Info: Starting transformation 'architect' on solution 'mult_add_pipeline.v1' (SOL-8)
+Design 'mult_add_pipeline' contains '5' real operations. (SOL-11)
+# Warning: Extrapolation detected. Script '/home/alumnes/s/serik.perez/hdd/lab6/Catapult_1/mult_add_pipeline.v1/adjust_char_library.tcl' generated. (LIB-142)
+# Info: Completed transformation 'architect' on solution 'mult_add_pipeline.v1': elapsed time 0.11 seconds, memory usage 1241640kB, peak memory usage 1241640kB (SOL-9)
+# Info: Design complexity at end of 'architect': Total ops = 22, Real ops = 5, Vars = 17 (SOL-21)
+
+# Messages from "go allocate"
+
+go allocate
+# Info: Starting transformation 'allocate' on solution 'mult_add_pipeline.v1' (SOL-8)
+Performing concurrent resource allocation and scheduling on '/mult_add_pipeline/core' (CRAAS-1)
+# Info: Select qualified components for data operations ... (CRAAS-3)
+# Info: Apply resource constraints on data operations ... (CRAAS-4)
+Prescheduled LOOP '/mult_add_pipeline/core/main' (4 c-steps) (SCHD-7)
+Prescheduled LOOP '/mult_add_pipeline/core/core:rlp' (1 c-steps) (SCHD-7)
+Prescheduled SEQUENTIAL '/mult_add_pipeline/core' (total length 5 c-steps) (SCHD-8)
+# Info: Initial schedule of SEQUENTIAL '/mult_add_pipeline/core': Latency = 3, Area (Datapath, Register, Total) = 4206.21, 625.63, 4831.84 (CRAAS-11)
+At least one feasible schedule exists. (CRAAS-9)
+# Info: Final schedule of SEQUENTIAL '/mult_add_pipeline/core': Latency = 4, Area (Datapath, Register, Total) = 2853.26, 963.98, 3817.25 (CRAAS-12)
+Resource allocation and scheduling done. (CRAAS-2)
+Netlist written to file 'schedule.gnt' (NET-4)
+# Info: Completed transformation 'allocate' on solution 'mult_add_pipeline.v1': elapsed time 0.06 seconds, memory usage 1241640kB, peak memory usage 1241640kB (SOL-9)
+# Info: Design complexity at end of 'allocate': Total ops = 22, Real ops = 5, Vars = 17 (SOL-21)
+
+# Messages from "go schedule"
+
+go extract
+# Info: Starting transformation 'schedule' on solution 'mult_add_pipeline.v1' (SOL-8)
+Performing concurrent resource allocation and scheduling on '/mult_add_pipeline/core' (CRAAS-1)
+Global signal 'a:rsc.rdy' added to design 'mult_add_pipeline' for component 'a:rsci' (LIB-3)
+Global signal 'a:rsc.vld' added to design 'mult_add_pipeline' for component 'a:rsci' (LIB-3)
+Global signal 'a:rsc.dat' added to design 'mult_add_pipeline' for component 'a:rsci' (LIB-3)
+# Info: Creating buffer for wait controller for component 'a:rsc' (SCHD-46)
+Global signal 'b:rsc.rdy' added to design 'mult_add_pipeline' for component 'b:rsci' (LIB-3)
+Global signal 'b:rsc.vld' added to design 'mult_add_pipeline' for component 'b:rsci' (LIB-3)
+Global signal 'b:rsc.dat' added to design 'mult_add_pipeline' for component 'b:rsci' (LIB-3)
+# Info: Creating buffer for wait controller for component 'b:rsc' (SCHD-46)
+Global signal 'c:rsc.rdy' added to design 'mult_add_pipeline' for component 'c:rsci' (LIB-3)
+Global signal 'c:rsc.vld' added to design 'mult_add_pipeline' for component 'c:rsci' (LIB-3)
+Global signal 'c:rsc.dat' added to design 'mult_add_pipeline' for component 'c:rsci' (LIB-3)
+# Info: Creating buffer for wait controller for component 'c:rsc' (SCHD-46)
+Global signal 'gain:rsc.dat' added to design 'mult_add_pipeline' for component 'gain:rsci' (LIB-3)
+# Info: Creating buffer for wait controller for component 'gain:rsc' (SCHD-46)
+Global signal 'gain_adjust:rsc.dat' added to design 'mult_add_pipeline' for component 'gain_adjust:rsci' (LIB-3)
+# Info: Creating buffer for wait controller for component 'gain_adjust:rsc' (SCHD-46)
+Global signal 'result:rsc.rdy' added to design 'mult_add_pipeline' for component 'result:rsci' (LIB-3)
+Global signal 'result:rsc.vld' added to design 'mult_add_pipeline' for component 'result:rsci' (LIB-3)
+Global signal 'result:rsc.dat' added to design 'mult_add_pipeline' for component 'result:rsci' (LIB-3)
+Global signal 'gain:rsc.triosy.lz' added to design 'mult_add_pipeline' for component 'gain:rsc.triosy:obj' (LIB-3)
+Global signal 'gain_adjust:rsc.triosy.lz' added to design 'mult_add_pipeline' for component 'gain_adjust:rsc.triosy:obj' (LIB-3)
+# Info: Loop '/mult_add_pipeline/core/main' is pipelined with initiation interval 1 and no flushing (SCHD-43)
+Report written to file 'cycle.rpt'
+# Info: Completed transformation 'schedule' on solution 'mult_add_pipeline.v1': elapsed time 1.09 seconds, memory usage 1249804kB, peak memory usage 1249804kB (SOL-9)
+# Info: Design complexity at end of 'schedule': Total ops = 329, Real ops = 57, Vars = 234 (SOL-21)
+
+# Messages from "go dpfsm"
+
+# Info: Starting transformation 'dpfsm' on solution 'mult_add_pipeline.v1' (SOL-8)
+Performing FSM extraction... (FSM-1)
+# Info: Completed transformation 'dpfsm' on solution 'mult_add_pipeline.v1': elapsed time 0.17 seconds, memory usage 1249804kB, peak memory usage 1249804kB (SOL-9)
+# Info: Design complexity at end of 'dpfsm': Total ops = 260, Real ops = 76, Vars = 217 (SOL-21)
+
+# Messages from "go extract"
+
+# Info: Starting transformation 'instance' on solution 'mult_add_pipeline.v1' (SOL-8)
+Netlist written to file 'schematic.nlv' (NET-4)
+# Info: Completed transformation 'instance' on solution 'mult_add_pipeline.v1': elapsed time 0.26 seconds, memory usage 1249804kB, peak memory usage 1249804kB (SOL-9)
+# Info: Design complexity at end of 'instance': Total ops = 258, Real ops = 74, Vars = 250 (SOL-21)
+# Info: Starting transformation 'extract' on solution 'mult_add_pipeline.v1' (SOL-8)
+Report written to file 'rtl.rpt'
+Generating scverify_top.cpp ()
+Netlist written to file 'rtl.vhdl' (NET-4)
+generate concat
+order file name is: rtl.vhdl_order.txt
+Add dependent file: /tools/Siemens_EDA/Catapult/2021.1/Mgc_home/pkgs/siflibs/ccs_in_wait_v1.vhd
+Add dependent file: /tools/Siemens_EDA/Catapult/2021.1/Mgc_home/pkgs/siflibs/ccs_out_wait_v1.vhd
+Add dependent file: /tools/Siemens_EDA/Catapult/2021.1/Mgc_home/pkgs/siflibs/mgc_io_sync_v2.vhd
+Add dependent file: /tools/Siemens_EDA/Catapult/2021.1/Mgc_home/pkgs/siflibs/ccs_in_v1.vhd
+Add dependent file: ./rtl.vhdl
+Finished writing concatenated file: /home/alumnes/s/serik.perez/hdd/lab6/Catapult_1/mult_add_pipeline.v1/concat_rtl.vhdl
+order file name is: rtl.vhdl_order_sim.txt
+Add dependent file: /tools/Siemens_EDA/Catapult/2021.1/Mgc_home/pkgs/siflibs/ccs_in_wait_v1.vhd
+Add dependent file: /tools/Siemens_EDA/Catapult/2021.1/Mgc_home/pkgs/siflibs/ccs_out_wait_v1.vhd
+Add dependent file: /tools/Siemens_EDA/Catapult/2021.1/Mgc_home/pkgs/siflibs/mgc_io_sync_v2.vhd
+Add dependent file: /tools/Siemens_EDA/Catapult/2021.1/Mgc_home/pkgs/siflibs/ccs_in_v1.vhd
+Add dependent file: ./rtl.vhdl
+Finished writing concatenated simulation file: /home/alumnes/s/serik.perez/hdd/lab6/Catapult_1/mult_add_pipeline.v1/concat_sim_rtl.vhdl
+Generating SCVerify testbench files
+Makefile for RTL VHDL output 'rtl.vhdl' vs Untimed C++ written to file './scverify/Verify_rtl_vhdl_msim.mk'
+Makefile for Concat RTL VHDL output 'concat_sim_rtl.vhdl' vs Untimed C++ written to file './scverify/Verify_concat_sim_rtl_vhdl_msim.mk'
+Netlist written to file 'rtl.v' (NET-4)
+generate concat
+order file name is: rtl.v_order.txt
+Add dependent file: /tools/Siemens_EDA/Catapult/2021.1/Mgc_home/pkgs/siflibs/ccs_in_wait_v1.v
+Add dependent file: /tools/Siemens_EDA/Catapult/2021.1/Mgc_home/pkgs/siflibs/ccs_out_wait_v1.v
+Add dependent file: /tools/Siemens_EDA/Catapult/2021.1/Mgc_home/pkgs/siflibs/mgc_io_sync_v2.v
+Add dependent file: /tools/Siemens_EDA/Catapult/2021.1/Mgc_home/pkgs/siflibs/ccs_in_v1.v
+Add dependent file: ./rtl.v
+Finished writing concatenated file: /home/alumnes/s/serik.perez/hdd/lab6/Catapult_1/mult_add_pipeline.v1/concat_rtl.v
+order file name is: rtl.v_order_sim.txt
+Add dependent file: /tools/Siemens_EDA/Catapult/2021.1/Mgc_home/pkgs/siflibs/ccs_in_wait_v1.v
+Add dependent file: /tools/Siemens_EDA/Catapult/2021.1/Mgc_home/pkgs/siflibs/ccs_out_wait_v1.v
+Add dependent file: /tools/Siemens_EDA/Catapult/2021.1/Mgc_home/pkgs/siflibs/mgc_io_sync_v2.v
+Add dependent file: /tools/Siemens_EDA/Catapult/2021.1/Mgc_home/pkgs/siflibs/ccs_in_v1.v
+Add dependent file: ./rtl.v
+Finished writing concatenated simulation file: /home/alumnes/s/serik.perez/hdd/lab6/Catapult_1/mult_add_pipeline.v1/concat_sim_rtl.v
+Makefile for RTL Verilog output 'rtl.v' vs Untimed C++ written to file './scverify/Verify_rtl_v_msim.mk'
+Makefile for Concat RTL Verilog output 'concat_sim_rtl.v' vs Untimed C++ written to file './scverify/Verify_concat_sim_rtl_v_msim.mk'
+# Info: Completed transformation 'extract' on solution 'mult_add_pipeline.v1': elapsed time 1.58 seconds, memory usage 1249804kB, peak memory usage 1249804kB (SOL-9)
+# Info: Design complexity at end of 'extract': Total ops = 258, Real ops = 74, Vars = 218 (SOL-21)

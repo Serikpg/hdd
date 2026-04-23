@@ -1,0 +1,132 @@
+# //  Questa Sim-64
+# //  Version 2021.3_2 linux_x86_64 Sep 10 2021
+# //
+# //  Copyright 1991-2021 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# vsim -i -t ps -wlf ./Catapult_1/mult_add_pipeline.v12/scverify/concat_sim_rtl_v_msim/vsim.wlf -l ./Catapult_1/mult_add_pipeline.v12/scverify/concat_sim_rtl_v_msim/sim.log -L ./Catapult_1/mult_add_pipeline.v12/scverify/concat_sim_rtl_v_msim/work scverify_top_opt -do "do {./Catapult_1/mult_add_pipeline.v12/scverify/concat_sim_rtl_v_msim/scverify_msim_wave.tcl}" 
+# Start time: 17:47:29 on Apr 23,2026
+# Loading /home/alumnes/s/serik.perez/hdd/lab6/Catapult_1/mult_add_pipeline.v12/scverify/concat_sim_rtl_v_msim/work/_sc/linux_x86_64_gcc-7.4.0/systemc.so
+# Loading /home/alumnes/s/serik.perez/hdd/lab6/Catapult_1/mult_add_pipeline.v12/scverify/concat_sim_rtl_v_msim/work.scverify_top
+# Info: CCS_CLK_CTOR: Clock 'clk' - Using default clock period '8 ns'
+# Loading work.mult_add_pipeline(fast)
+# ** Note: (vsim-17423) SystemC IEEE 1666 deprecated warnings are suppressed by default. Enable the 'ScShowIeeeDeprecationWarnings' modelsim.ini variable to get more information about the suppressed warnings.
+# Loading work.mult_add_pipeline_core(fast)
+# Loading work.ccs_in_v1(fast)
+# Loading work.ccs_in_v1(fast__1)
+# Loading work.mult_add_pipeline_core_a_rsci(fast)
+# Loading work.ccs_in_wait_v1(fast)
+# Loading work.mult_add_pipeline_core_a_rsci_a_wait_ctrl(fast)
+# Loading work.mult_add_pipeline_core_a_rsci_a_wait_dp(fast)
+# Loading work.mult_add_pipeline_core_b_rsci(fast)
+# Loading work.ccs_in_wait_v1(fast__1)
+# Loading work.mult_add_pipeline_core_b_rsci_b_wait_ctrl(fast)
+# Loading work.mult_add_pipeline_core_b_rsci_b_wait_dp(fast)
+# Loading work.mult_add_pipeline_core_c_rsci(fast)
+# Loading work.ccs_in_wait_v1(fast__2)
+# Loading work.mult_add_pipeline_core_c_rsci_c_wait_ctrl(fast)
+# Loading work.mult_add_pipeline_core_c_rsci_c_wait_dp(fast)
+# Loading work.mult_add_pipeline_core_result_rsci(fast)
+# Loading work.ccs_out_wait_v1(fast)
+# Loading work.mult_add_pipeline_core_result_rsci_result_wait_ctrl(fast)
+# Loading work.mult_add_pipeline_core_result_rsci_result_wait_dp(fast)
+# Loading work.mult_add_pipeline_core_gain_rsc_triosy_obj(fast)
+# Loading work.mgc_io_sync_v2(fast)
+# Loading work.mult_add_pipeline_core_gain_rsc_triosy_obj_gain_rsc_triosy_wait_ctrl(fast)
+# Loading work.mult_add_pipeline_core_gain_adjust_rsc_triosy_obj(fast)
+# Loading work.mult_add_pipeline_core_gain_adjust_rsc_triosy_obj_gain_adjust_rsc_triosy_wait_ctrl(fast)
+# Loading work.mult_add_pipeline_core_staller(fast)
+# Loading work.mult_add_pipeline_core_core_fsm(fast)
+# ** Warning: (vsim-4029) The fifo '/scverify_top/user_tb/result_golden'
+# (and any connected ports) is undebuggable as the tlm fifo size specified is '-1'. A tlm fifo with an infinite size is not debuggable.
+# ** Warning: (vsim-4029) The fifo '/scverify_top/TLS_in_wait_ctrl_fifo_gain_adjust'
+# (and any connected ports) is undebuggable as the tlm fifo size specified is '-1'. A tlm fifo with an infinite size is not debuggable.
+# ** Warning: (vsim-4029) The fifo '/scverify_top/TLS_in_fifo_gain_adjust'
+# (and any connected ports) is undebuggable as the tlm fifo size specified is '-1'. A tlm fifo with an infinite size is not debuggable.
+# ** Warning: (vsim-4029) The fifo '/scverify_top/TLS_in_wait_ctrl_fifo_gain'
+# (and any connected ports) is undebuggable as the tlm fifo size specified is '-1'. A tlm fifo with an infinite size is not debuggable.
+# ** Warning: (vsim-4029) The fifo '/scverify_top/TLS_in_fifo_gain'
+# (and any connected ports) is undebuggable as the tlm fifo size specified is '-1'. A tlm fifo with an infinite size is not debuggable.
+# ** Warning: (vsim-4029) The fifo '/scverify_top/TLS_out_wait_ctrl_fifo_result'
+# (and any connected ports) is undebuggable as the tlm fifo size specified is '-1'. A tlm fifo with an infinite size is not debuggable.
+# ** Warning: (vsim-4029) The fifo '/scverify_top/TLS_out_fifo_result'
+# (and any connected ports) is undebuggable as the tlm fifo size specified is '-1'. A tlm fifo with an infinite size is not debuggable.
+# ** Warning: (vsim-4029) The fifo '/scverify_top/TLS_in_wait_ctrl_fifo_c'
+# (and any connected ports) is undebuggable as the tlm fifo size specified is '-1'. A tlm fifo with an infinite size is not debuggable.
+# ** Warning: (vsim-4029) The fifo '/scverify_top/TLS_in_fifo_c'
+# (and any connected ports) is undebuggable as the tlm fifo size specified is '-1'. A tlm fifo with an infinite size is not debuggable.
+# ** Warning: (vsim-4029) The fifo '/scverify_top/TLS_in_wait_ctrl_fifo_b'
+# (and any connected ports) is undebuggable as the tlm fifo size specified is '-1'. A tlm fifo with an infinite size is not debuggable.
+# ** Warning: (vsim-4029) The fifo '/scverify_top/TLS_in_fifo_b'
+# (and any connected ports) is undebuggable as the tlm fifo size specified is '-1'. A tlm fifo with an infinite size is not debuggable.
+# ** Warning: (vsim-4029) The fifo '/scverify_top/TLS_in_wait_ctrl_fifo_a'
+# (and any connected ports) is undebuggable as the tlm fifo size specified is '-1'. A tlm fifo with an infinite size is not debuggable.
+# ** Warning: (vsim-4029) The fifo '/scverify_top/TLS_in_fifo_a'
+# (and any connected ports) is undebuggable as the tlm fifo size specified is '-1'. A tlm fifo with an infinite size is not debuggable.
+# Disabling STALL_FLAG toggling
+# do {./Catapult_1/mult_add_pipeline.v12/scverify/concat_sim_rtl_v_msim/scverify_msim_wave.tcl}
+# Reading SCVerify waveform database './Catapult_1/mult_add_pipeline.v12/scverify/ccs_wave_signals.dat'
+# Populating WAVE window...
+#                 DONE
+# 0
+# 
+# stdin: <EOF>
+run -all 
+# SCVerify intercepting C++ function 'mult_add_pipeline' for RTL block 'mult_add_pipeline'
+# Info: HW reset: TLS_rst active @ 0 s
+# iteration:  0 a = 1383  b =  9158  result_ref = 2c142a90  result_bit_acc = 2c142a90 
+# iteration:  1 a =  105  b =  2163  result_ref = 203772a0  result_bit_acc = 203772a0 
+# iteration:  2 a = 1105  b =  7423  result_ref = 27d28ae0  result_bit_acc = 27d28ae0 
+# iteration:  3 a = 1098  b =  6380  result_ref = 26ae4370  result_bit_acc = 26ae4370 
+# iteration:  4 a = 1833  b = 15565  result_ref = 3b357d40  result_bit_acc = 3b357d40 
+# iteration:  5 a =  186  b =  6059  result_ref = 211323d0  result_bit_acc = 211323d0 
+# iteration:  6 a =  498  b =  7931  result_ref = 23c44450  result_bit_acc = 23c44450 
+# iteration:  7 a =  483  b =  8518  result_ref = 23ec7110  result_bit_acc = 23ec7110 
+# iteration:  8 a =  124  b =  8898  result_ref = 210d5f70  result_bit_acc = 210d5f70 
+# iteration:  9 a =   84  b = 10232  result_ref = 1068eaf0  result_bit_acc = 1068eaf0 
+# iteration: 10 a =  795  b = 10728  result_ref = 14111bb0  result_bit_acc = 14111bb0 
+# iteration: 11 a = 1511  b =   909  result_ref = 10a7a9d0  result_bit_acc = 10a7a9d0 
+# iteration: 12 a = 1910  b =  9562  result_ref = 18b56bd0  result_bit_acc = 18b56bd0 
+# iteration: 13 a =  302  b = 12899  result_ref = 11db8640  result_bit_acc = 11db8640 
+# iteration: 14 a =  563  b =  6047  result_ref = 119f9560  result_bit_acc = 119f9560 
+# iteration: 15 a = 1225  b =  1946  result_ref = 1122ff40  result_bit_acc = 1122ff40 
+# iteration: 16 a =  870  b =  7474  result_ref = 1319bf50  result_bit_acc = 1319bf50 
+# iteration: 17 a =   13  b =  6071  result_ref = 1009a250  result_bit_acc = 1009a250 
+# iteration: 18 a =  561  b =  9304  result_ref = 127d26b0  result_bit_acc = 127d26b0 
+# iteration: 19 a =  163  b =  6490  result_ref = 10812260  result_bit_acc = 10812260 
+# Info: Execution of user-supplied C++ testbench 'main()' has completed with exit code = 0
+# 
+# Info: Collecting data completed
+#    captured 20 values of a
+#    captured 20 values of b
+#    captured 20 values of c
+#    captured 20 values of gain
+#    captured 20 values of gain_adjust
+#    captured 20 values of result
+# Info: scverify_top/user_tb: Simulation completed
+# 
+# Checking results
+# 'result'
+#    capture count        = 20
+#    comparison count     = 20
+#    ignore count         = 0
+#    error count          = 0
+#    stuck in dut fifo    = 0
+#    stuck in golden fifo = 0
+# 
+# Info: scverify_top/user_tb: Simulation PASSED @ 205 ns
+# ** Note: (vsim-6574) SystemC simulation stopped by user.
+# 1
+# 
+# Info: scverify_top/Monitor: runs with constant clock period 8 ns
+# Info: scverify_top/Monitor: Throughput: 1 transaction per 8 ns
+# End time: 17:56:16 on Apr 23,2026, Elapsed time: 0:08:47
+# Errors: 0, Warnings: 13, Suppressed Warnings: 2

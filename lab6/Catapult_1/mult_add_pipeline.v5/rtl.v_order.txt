@@ -1,0 +1,5 @@
+/tools/Siemens_EDA/Catapult/2021.1/Mgc_home/pkgs/siflibs/ccs_ctrl_in_buf_wait_v4.v
+/tools/Siemens_EDA/Catapult/2021.1/Mgc_home/pkgs/siflibs/ccs_out_buf_wait_v5.v
+/tools/Siemens_EDA/Catapult/2021.1/Mgc_home/pkgs/siflibs/mgc_io_sync_v2.v
+/tools/Siemens_EDA/Catapult/2021.1/Mgc_home/pkgs/siflibs/ccs_in_v1.v
+./rtl.v
