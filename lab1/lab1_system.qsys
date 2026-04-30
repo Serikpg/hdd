@@ -57,6 +57,14 @@
          type = "String";
       }
    }
+   element axi4_lite_booth_0.irq
+   {
+      datum _tags
+      {
+         value = "";
+         type = "String";
+      }
+   }
 }
 ]]></parameter>
  <parameter name="clockCrossingAdapter" value="HANDSHAKE" />
@@ -718,7 +726,7 @@
    version="21.1"
    start="ARM_A9_HPS.f2h_irq0"
    end="axi4_lite_booth_0.irq">
-  <parameter name="irqNumber" value="0" />
+  <parameter name="irqNumber" value="1" />
  </connection>
  <connection
    kind="reset"

@@ -111,6 +111,8 @@ architecture arch_imp of axi4_lite_booth is
 	signal slv_reg0	:std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
 	signal slv_reg1	:std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
 	signal slv_reg2	:std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+	signal booth_result	:std_logic_vector(31 downto 0);
+	signal busy	        :std_logic;
 	signal slv_reg3	:std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
 	signal slv_reg_rden	: std_logic;
 	signal slv_reg_wren	: std_logic;
@@ -365,7 +367,7 @@ begin
 	-- and the slave is ready to accept the read address.
 	slv_reg_rden <= axi_arready and axs_s0_AXI_ARVALID and (not axi_rvalid) ;
 
-	process (slv_reg0, slv_reg1, slv_reg2, slv_reg3, axi_araddr, reset_n, slv_reg_rden)
+	process (slv_reg0, slv_reg1, slv_reg2, slv_reg3, axi_araddr, reset_n, slv_reg_rden, booth_result, busy)
 	variable loc_addr :std_logic_vector(OPT_MEM_ADDR_BITS downto 0);
 	begin
 	    -- Address decoding for reading registers
@@ -376,9 +378,9 @@ begin
 	      when b"01" =>
 	        reg_data_out <= slv_reg1;
 	      when b"10" =>
-	        reg_data_out <= slv_reg2;
+	        reg_data_out <= booth_result;
 	      when b"11" =>
-	        reg_data_out <= slv_reg3;
+	        reg_data_out <= (x"0000000" & slv_reg3(3 downto 2) & busy & slv_reg3(0));
 	      when others =>
 	        reg_data_out  <= (others => '0');
 	    end case;
@@ -409,13 +411,13 @@ begin
         clk         => clk         ,
         resetn      => reset_n     ,
         start       => slv_reg3(0) ,
-        busy        => slv_reg3(1) ,
+        busy        => busy        ,
         irq         => irq         ,
         ack         => slv_reg3(2) ,
-        data_a      => slv_reg0    ,
-        data_b      => slv_reg1    ,
-        result      => slv_reg2    ,
-        irq_enable  => slv_reg3(3)
+        data_a      => slv_reg0(15 downto 0) ,
+        data_b      => slv_reg1(15 downto 0) ,
+        result      => booth_result, 
+        irq_enable  => slv_reg3(3) 
     );
 
 	-- User logic ends

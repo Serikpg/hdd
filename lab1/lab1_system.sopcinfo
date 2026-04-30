@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EnsembleReport name="lab1_system" kind="lab1_system" version="1.0" fabric="QSYS">
  <!-- Format version 21.1 842 (Future versions may contain additional information.) -->
- <!-- 2026.04.23.17:18:42 -->
+ <!-- 2026.04.30.17:34:46 -->
  <!-- A collection of modules and connections -->
  <parameter name="AUTO_GENERATION_ID">
   <type>java.lang.Integer</type>
-  <value>1776957517</value>
+  <value>1777563282</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -16405,7 +16405,7 @@ parameters are a RESULT of the module parameters. -->
     <moduleName>axi4_lite_booth_0</moduleName>
     <slaveName>irq</slaveName>
     <name>axi4_lite_booth_0.irq</name>
-    <interruptNumber>0</interruptNumber>
+    <interruptNumber>1</interruptNumber>
    </interrupt>
   </interface>
   <interface name="f2h_irq1" kind="interrupt_receiver" version="21.1">
@@ -46198,7 +46198,7 @@ parameters are a RESULT of the module parameters. -->
     <moduleName>axi4_lite_booth_0</moduleName>
     <slaveName>irq</slaveName>
     <name>axi4_lite_booth_0.irq</name>
-    <interruptNumber>0</interruptNumber>
+    <interruptNumber>1</interruptNumber>
    </interrupt>
   </interface>
   <interface
@@ -84925,7 +84925,7 @@ parameters are a RESULT of the module parameters. -->
    end="axi4_lite_booth_0.irq">
   <parameter name="irqNumber">
    <type>int</type>
-   <value>0</value>
+   <value>1</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>true</visible>

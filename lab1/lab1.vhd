@@ -35,7 +35,7 @@ port(
 		
 		-- UART
 		HPS_UART_RX:			in std_logic;
-		HPS_UART_TX:			out std_logic;
+		HPS_UART_TX:			out std_logic
 
 		-- Pushbuttons
 		-- KEY: 				in std_logic_vector(3 downto 0);
@@ -80,9 +80,9 @@ architecture structural of lab1 is
 			memory_mem_dm               : out   std_logic_vector(3 downto 0);                     -- mem_dm
 			memory_oct_rzqin            : in    std_logic                     := 'X';             -- oct_rzqin
 			system_pll_ref_clk_clk      : in    std_logic                     := 'X';             -- clk
-			system_pll_ref_reset_reset  : in    std_logic                     := 'X';             -- reset
-			leds_readdata               : out   std_logic_vector(9 downto 0);                     -- readdata
-			pushbuttons_export          : in    std_logic_vector(3 downto 0)  := (others => 'X')  -- export
+			system_pll_ref_reset_reset  : in    std_logic                     := 'X'             -- reset
+			-- leds_readdata               : out   std_logic_vector(9 downto 0);                     -- readdata
+			-- pushbuttons_export          : in    std_logic_vector(3 downto 0)  := (others => 'X')  -- export
 		);
 	end component lab1_system;
 
@@ -121,7 +121,7 @@ begin
 			memory_mem_dm               => HPS_DDR3_DM,      	-- .mem_dm
 			memory_oct_rzqin            => HPS_DDR3_RZQ,     	-- .oct_rzqin
 			system_pll_ref_clk_clk      => CLOCK_50,      		-- system_pll_ref_clk.clk
-			system_pll_ref_reset_reset  => '0',  			-- system_pll_ref_reset.reset
+			system_pll_ref_reset_reset  => '0'  			-- system_pll_ref_reset.reset
 			-- leds_readdata 		    => LEDR,			-- output that drives the LEDs
 			-- pushbuttons_export 	    => KEY 			-- pushbutton input
 		);

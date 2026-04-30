@@ -9,6 +9,7 @@
 */
 
 void pushbutton_ISR(void);
+void booth_ISR(void);
 
 // Define the IRQ exception handler
 void __attribute__((interrupt)) __cs3_isr_irq(void)
@@ -18,7 +19,8 @@ void __attribute__((interrupt)) __cs3_isr_irq(void)
     int int_ID  = *((int *)address);
 
     if (int_ID == KEYS_IRQ) // check if interrupt is from the KEYs
-        pushbutton_ISR();
+        //pushbutton_ISR();
+        booth_ISR();
     else
         while (1)
             ; // if unexpected, then stay here

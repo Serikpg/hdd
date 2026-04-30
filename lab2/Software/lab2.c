@@ -2,6 +2,12 @@
 #include <stdio.h>
 #define COUNT28_BASE_ADDRESS 0xFF200020
 
+#define BOOTH_BASE_ADDRESS 0xFF200000
+#define DATA_A_ADDRESS ( BOOTH_BASE_ADDRESS + 0x0 )
+#define DATA_B_ADDRESS ( BOOTH_BASE_ADDRESS + 0x4 )
+#define RESULT_ADDRESS ( BOOTH_BASE_ADDRESS + 0x8 )
+#define STATUS_ADDRESS ( BOOTH_BASE_ADDRESS + 0xC )
+
 void set_A9_IRQ_stack(void);
 void config_GIC(void);
 void config_KEYs(void);
@@ -10,6 +16,9 @@ void enable_A9_interrupts(void);
  * declare these as volatile to avoid the compiler caching their values in
  * registers */
 volatile int key_pressed = 1;
+
+volatile int received;
+volatile int value_received;
 
 /* ********************************************************************************
  * This program demonstrates use of interrupts with C code. 
@@ -27,6 +36,11 @@ int main(void)
 
     //volatile int *leds = (int *)LEDR_BASE;
     volatile int *count28_enable = (int *)COUNT28_BASE_ADDRESS;
+    volatile int *status = (int *)STATUS_ADDRESS;
+    volatile int *data_a_ptr = (int *)DATA_A_ADDRESS;
+    volatile int *data_b_ptr = (int *)DATA_B_ADDRESS; 
+
+    int data_a, data_b; 
 
     set_A9_IRQ_stack();      // initialize the stack pointer for IRQ mode
     config_GIC();            // configure the general interrupt controller
@@ -36,19 +50,39 @@ int main(void)
     enable_A9_interrupts(); // enable interrupts
     
     printf("\nProgram starts...\n");
-    
- 
 
     while (1)
     {
-    	*count28_enable = key_pressed;      
+        if (received) { // if ISR notifies us new value has come
+            printf("result is: %d", value_received); // print out the mulltiplication resul
+        }
+
+    	// *count28_enable = key_pressed;
+        if (!(*status & 0x2)) { // if busy is not active
+            scanf("input operand a: %d", &data_a);
+            scanf("input operand b: %d", &data_b);
+            
+            *data_a_ptr = data_a;
+            *data_b_ptr = data_b;
+
+            *status = (*status | 0x1); // set start to 
+        }
     }
 }
 
 /* setup the KEY interrupts in the FPGA */
 void config_KEYs()
 {
-    volatile int * KEY_ptr = (int *)KEY_BASE; // pushbutton KEY address
+    // volatile int * KEY_ptr = (int *)KEY_BASE; // pushbutton KEY address
+    // *(KEY_ptr + 2) = 0x1; // enables interrupts for all pushbuttons
 
-    *(KEY_ptr + 2) = 0x1; // enables interrupts for all pushbuttons
+    // we can reuse this config_KEYs function to enable the
+    // interrupts of the booth multiplier source
+    volatile int * status = (int *)STATUS_ADDRESS;
+    *status = 0x8; // slv_reg3(3) = 1'b1
+
+    // before entering the main loop we must be sure there are no pending interrupts
+    *status = (*status | 0x4); // set ack 1
+    *status = (*status ^ 0x4); // set ack 0
 }
+
