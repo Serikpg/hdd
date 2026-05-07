@@ -6,6 +6,7 @@
    <connections preferredWidth="159" />
    <irq preferredWidth="47" />
    <name preferredWidth="193" />
+   <inputclock preferredWidth="115" />
   </columns>
  </systemtable>
  <library expandedCategories="Project,Library" />

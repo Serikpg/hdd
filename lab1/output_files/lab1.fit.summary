@@ -1,20 +1,20 @@
-Fitter Status : Successful - Thu Apr 30 17:51:00 2026
+Fitter Status : Failed - Thu May  7 17:53:01 2026
 Quartus Prime Version : 21.1.0 Build 842 10/21/2021 SJ Standard Edition
 Revision Name : lab1
-Top-level Entity Name : lab1
+Top-level Entity Name : booth
 Family : Cyclone V
 Device : 5CSXFC6D6F31C6
 Timing Models : Final
-Logic utilization (in ALMs) : 480 / 41,910 ( 1 % )
-Total registers : 981
-Total pins : 88 / 499 ( 18 % )
+Logic utilization (in ALMs) : 32 / 41,910 ( < 1 % )
+Total registers : 38
+Total pins : 71 / 499 ( 14 % )
 Total virtual pins : 0
-Total block memory bits : 1,024 / 5,662,720 ( < 1 % )
-Total RAM Blocks : 2 / 553 ( < 1 % )
+Total block memory bits : 0 / 5,662,720 ( 0 % )
+Total RAM Blocks : 0 / 553 ( 0 % )
 Total DSP Blocks : 0 / 112 ( 0 % )
 Total HSSI RX PCSs : 0 / 9 ( 0 % )
 Total HSSI PMA RX Deserializers : 0 / 9 ( 0 % )
 Total HSSI TX PCSs : 0 / 9 ( 0 % )
 Total HSSI PMA TX Serializers : 0 / 9 ( 0 % )
-Total PLLs : 1 / 15 ( 7 % )
-Total DLLs : 1 / 4 ( 25 % )
+Total PLLs : 0 / 15 ( 0 % )
+Total DLLs : 0 / 4 ( 0 % )
