@@ -57,13 +57,13 @@ preplace inst lab1_system.ARM_A9_HPS.gpio2 -pg 1
 preplace inst lab1_system.ARM_A9_HPS.timer3 -pg 1
 preplace inst lab1_system.ARM_A9_HPS.fpgamgr -pg 1
 preplace inst lab1_system.ARM_A9_HPS.arm_a9_1 -pg 1
-preplace netloc EXPORT<net_container>lab1_system</net_container>(SLAVE)lab1_system.system_pll_ref_clk,(SLAVE)System_PLL.ref_clk) 1 0 1 NJ
-preplace netloc EXPORT<net_container>lab1_system</net_container>(SLAVE)lab1_system.hps_io,(SLAVE)ARM_A9_HPS.hps_io) 1 0 2 NJ 130 NJ
-preplace netloc INTERCONNECT<net_container>lab1_system</net_container>(MASTER)ARM_A9_HPS.h2f_reset,(MASTER)System_PLL.reset_source,(SLAVE)axi4_lite_booth_0.reset,(SLAVE)JTAG_UART.reset) 1 1 2 NJ 160 750
-preplace netloc FAN_OUT<net_container>lab1_system</net_container>(SLAVE)axi4_lite_booth_0.axi4_lite,(MASTER)ARM_A9_HPS.h2f_lw_axi_master,(SLAVE)JTAG_UART.avalon_jtag_slave) 1 2 1 790
+preplace netloc FAN_OUT<net_container>lab1_system</net_container>(SLAVE)JTAG_UART.irq,(SLAVE)axi4_lite_booth_0.irq,(MASTER)ARM_A9_HPS.f2h_irq0) 1 2 1 790
 preplace netloc EXPORT<net_container>lab1_system</net_container>(SLAVE)lab1_system.system_pll_ref_reset,(SLAVE)System_PLL.ref_reset) 1 0 1 NJ
-preplace netloc FAN_OUT<net_container>lab1_system</net_container>(MASTER)ARM_A9_HPS.f2h_irq0,(SLAVE)axi4_lite_booth_0.irq,(SLAVE)JTAG_UART.irq) 1 2 1 810
+preplace netloc INTERCONNECT<net_container>lab1_system</net_container>(SLAVE)JTAG_UART.reset,(MASTER)System_PLL.reset_source,(SLAVE)axi4_lite_booth_0.reset,(MASTER)ARM_A9_HPS.h2f_reset) 1 1 2 N 180 770
+preplace netloc FAN_OUT<net_container>lab1_system</net_container>(SLAVE)JTAG_UART.avalon_jtag_slave,(MASTER)ARM_A9_HPS.h2f_lw_axi_master,(SLAVE)axi4_lite_booth_0.axi4_lite) 1 2 1 750
 preplace netloc EXPORT<net_container>lab1_system</net_container>(SLAVE)lab1_system.memory,(SLAVE)ARM_A9_HPS.memory) 1 0 2 NJ 350 NJ
-preplace netloc FAN_OUT<net_container>lab1_system</net_container>(SLAVE)ARM_A9_HPS.h2f_axi_clock,(MASTER)System_PLL.sys_clk,(SLAVE)JTAG_UART.clk,(SLAVE)ARM_A9_HPS.h2f_lw_axi_clock,(SLAVE)axi4_lite_booth_0.clock,(SLAVE)ARM_A9_HPS.f2h_axi_clock) 1 1 2 430 180 770
+preplace netloc EXPORT<net_container>lab1_system</net_container>(SLAVE)ARM_A9_HPS.hps_io,(SLAVE)lab1_system.hps_io) 1 0 2 NJ 290 NJ
+preplace netloc FAN_OUT<net_container>lab1_system</net_container>(SLAVE)ARM_A9_HPS.f2h_axi_clock,(SLAVE)ARM_A9_HPS.h2f_axi_clock,(MASTER)System_PLL.sys_clk,(SLAVE)JTAG_UART.clk,(SLAVE)axi4_lite_booth_0.clock,(SLAVE)ARM_A9_HPS.h2f_lw_axi_clock) 1 1 2 390 160 810
+preplace netloc EXPORT<net_container>lab1_system</net_container>(SLAVE)System_PLL.ref_clk,(SLAVE)lab1_system.system_pll_ref_clk) 1 0 1 NJ
 levelinfo -pg 1 0 140 1040
 levelinfo -hier lab1_system 150 230 560 890 1030

@@ -380,7 +380,8 @@ begin
 	      when b"10" =>
 	        reg_data_out <= booth_result;
 	      when b"11" =>
-	        reg_data_out <= (slv_reg3(3 downto 2) & busy & slv_reg3(0));
+	        -- reg_data_out <= (slv_reg3(3 downto 2) & busy & slv_reg3(0));
+            reg_data_out <= (31 downto 4 => '0') & slv_reg3(3 downto 2) & busy & slv_reg3(0);
 	      when others =>
 	        reg_data_out  <= (others => '0');
 	    end case;
@@ -417,7 +418,7 @@ begin
         data_a      => slv_reg0(15 downto 0) ,
         data_b      => slv_reg1(15 downto 0) ,
         result      => booth_result, 
-        irq_enable  => slv_reg3(3) 
+        irq_enable  => '1' 
     );
 
 	-- User logic ends

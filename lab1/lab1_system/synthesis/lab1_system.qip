@@ -2,7 +2,7 @@ set_global_assignment -entity "lab1_system" -library "lab1_system" -name IP_TOOL
 set_global_assignment -entity "lab1_system" -library "lab1_system" -name IP_TOOL_VERSION "21.1"
 set_global_assignment -entity "lab1_system" -library "lab1_system" -name IP_TOOL_ENV "Qsys"
 set_global_assignment -library "lab1_system" -name SOPCINFO_FILE [file join $::quartus(qip_path) "../../lab1_system.sopcinfo"]
-set_global_assignment -entity "lab1_system" -library "lab1_system" -name SLD_INFO "QSYS_NAME lab1_system HAS_SOPCINFO 1 GENERATION_ID 1777563282"
+set_global_assignment -entity "lab1_system" -library "lab1_system" -name SLD_INFO "QSYS_NAME lab1_system HAS_SOPCINFO 1 GENERATION_ID 1778491208"
 set_global_assignment -library "lab1_system" -name MISC_FILE [file join $::quartus(qip_path) "../lab1_system.cmp"]
 set_global_assignment -library "lab1_system" -name SLD_FILE [file join $::quartus(qip_path) "lab1_system.regmap"]
 set_global_assignment -library "lab1_system" -name MISC_FILE [file join $::quartus(qip_path) "lab1_system_ARM_A9_HPS_hps.svd"]
@@ -17,7 +17,7 @@ set_global_assignment -entity "lab1_system" -library "lab1_system" -name IP_COMP
 set_global_assignment -entity "lab1_system" -library "lab1_system" -name IP_COMPONENT_REPORT_HIERARCHY "On"
 set_global_assignment -entity "lab1_system" -library "lab1_system" -name IP_COMPONENT_INTERNAL "Off"
 set_global_assignment -entity "lab1_system" -library "lab1_system" -name IP_COMPONENT_VERSION "MS4w"
-set_global_assignment -entity "lab1_system" -library "lab1_system" -name IP_COMPONENT_PARAMETER "QVVUT19HRU5FUkFUSU9OX0lE::MTc3NzU2MzI4Mg==::QXV0byBHRU5FUkFUSU9OX0lE"
+set_global_assignment -entity "lab1_system" -library "lab1_system" -name IP_COMPONENT_PARAMETER "QVVUT19HRU5FUkFUSU9OX0lE::MTc3ODQ5MTIwOA==::QXV0byBHRU5FUkFUSU9OX0lE"
 set_global_assignment -entity "lab1_system" -library "lab1_system" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfRkFNSUxZ::Q3ljbG9uZSBW::QXV0byBERVZJQ0VfRkFNSUxZ"
 set_global_assignment -entity "lab1_system" -library "lab1_system" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0U=::NUNTWEZDNkQ2RjMxQzY=::QXV0byBERVZJQ0U="
 set_global_assignment -entity "lab1_system" -library "lab1_system" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfU1BFRURHUkFERQ==::Nl9INg==::QXV0byBERVZJQ0VfU1BFRURHUkFERQ=="

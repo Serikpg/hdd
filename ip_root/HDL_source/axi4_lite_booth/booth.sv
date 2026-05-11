@@ -41,7 +41,7 @@ always_ff @(posedge clk) begin
         state <= 4'h1;
       end
     end else if (state == 4'h9) begin
-      if ((old_ack == 1'b0) && (ack == 1'b1)) begin
+      if ((old_ack == 1'b1) && (ack == 1'b0)) begin
         state <= '0;
       end
     end else begin

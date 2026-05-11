@@ -20,7 +20,6 @@ Warning: lab1_system.ARM_A9_HPS: "Configuration/HPS-to-FPGA user 0 clock frequen
 Warning: lab1_system.ARM_A9_HPS: 1 or more output clock frequencies cannot be achieved precisely, consider revising desired output clock frequencies.
 Info: lab1_system.JTAG_UART: JTAG UART IP input clock need to be at least double (2x) the operating frequency of JTAG TCK on board
 Info: lab1_system.System_PLL: Refclk Freq: 50.0
-Warning: lab1_system.axi4_lite_booth_0.irq: Signal irq has unknown type writeresponsevalid_n
 Warning: lab1_system.ARM_A9_HPS: ARM_A9_HPS.f2h_stm_hw_events must be exported, or connected to a matching conduit.
 Info: qsys-generate succeeded.
 Info: Finished: Create block symbol file (.bsf)
@@ -47,15 +46,12 @@ Warning: lab1_system.ARM_A9_HPS: "Configuration/HPS-to-FPGA user 0 clock frequen
 Warning: lab1_system.ARM_A9_HPS: 1 or more output clock frequencies cannot be achieved precisely, consider revising desired output clock frequencies.
 Info: lab1_system.JTAG_UART: JTAG UART IP input clock need to be at least double (2x) the operating frequency of JTAG TCK on board
 Info: lab1_system.System_PLL: Refclk Freq: 50.0
-Warning: lab1_system.axi4_lite_booth_0.irq: Signal irq has unknown type writeresponsevalid_n
 Warning: lab1_system.ARM_A9_HPS: ARM_A9_HPS.f2h_stm_hw_events must be exported, or connected to a matching conduit.
 Info: lab1_system: Generating lab1_system "lab1_system" for QUARTUS_SYNTH
 Warning: ARM_A9_HPS.f2h_irq0: Cannot connect clock for irq_mapper.sender
 Warning: ARM_A9_HPS.f2h_irq0: Cannot connect reset for irq_mapper.sender
 Warning: ARM_A9_HPS.f2h_irq1: Cannot connect clock for irq_mapper_001.sender
 Warning: ARM_A9_HPS.f2h_irq1: Cannot connect reset for irq_mapper_001.sender
-Warning: lab1_system: "No matching role found for irq_mapper:receiver1:receiver1_irq (irq)"
-Warning: lab1_system: "No matching role found for axi4_lite_booth_0:irq:irq (writeresponsevalid_n)"
 Info: ARM_A9_HPS: "Running  for module: ARM_A9_HPS"
 Info: ARM_A9_HPS: HPS Main PLL counter settings: n = 0  m = 73
 Info: ARM_A9_HPS: HPS peripherial PLL counter settings: n = 0  m = 39
@@ -63,7 +59,7 @@ Warning: ARM_A9_HPS: "Configuration/HPS-to-FPGA user 0 clock frequency" (desired
 Warning: ARM_A9_HPS: 1 or more output clock frequencies cannot be achieved precisely, consider revising desired output clock frequencies.
 Info: ARM_A9_HPS: "lab1_system" instantiated altera_hps "ARM_A9_HPS"
 Info: JTAG_UART: Starting RTL generation for module 'lab1_system_JTAG_UART'
-Info: JTAG_UART:   Generation command is [exec /tools/intel/FPGA/21.1/quartus/linux64/perl/bin/perl -I /tools/intel/FPGA/21.1/quartus/linux64/perl/lib -I /tools/intel/FPGA/21.1/quartus/sopc_builder/bin/europa -I /tools/intel/FPGA/21.1/quartus/sopc_builder/bin -I /tools/intel/FPGA/21.1/quartus/../ip/altera/sopc_builder_ip/common -I /tools/intel/FPGA/21.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_jtag_uart -- /tools/intel/FPGA/21.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_jtag_uart/generate_rtl.pl --name=lab1_system_JTAG_UART --dir=/tmp/alt0573_8735986773846413161.dir/0087_JTAG_UART_gen/ --quartus_dir=/tools/intel/FPGA/21.1/quartus --verilog --config=/tmp/alt0573_8735986773846413161.dir/0087_JTAG_UART_gen//lab1_system_JTAG_UART_component_configuration.pl  --do_build_sim=0  ]
+Info: JTAG_UART:   Generation command is [exec /tools/intel/FPGA/21.1/quartus/linux64/perl/bin/perl -I /tools/intel/FPGA/21.1/quartus/linux64/perl/lib -I /tools/intel/FPGA/21.1/quartus/sopc_builder/bin/europa -I /tools/intel/FPGA/21.1/quartus/sopc_builder/bin -I /tools/intel/FPGA/21.1/quartus/../ip/altera/sopc_builder_ip/common -I /tools/intel/FPGA/21.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_jtag_uart -- /tools/intel/FPGA/21.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_jtag_uart/generate_rtl.pl --name=lab1_system_JTAG_UART --dir=/tmp/alt0584_1258015650085357592.dir/0058_JTAG_UART_gen/ --quartus_dir=/tools/intel/FPGA/21.1/quartus --verilog --config=/tmp/alt0584_1258015650085357592.dir/0058_JTAG_UART_gen//lab1_system_JTAG_UART_component_configuration.pl  --do_build_sim=0  ]
 Info: JTAG_UART: Done RTL generation for module 'lab1_system_JTAG_UART'
 Info: JTAG_UART: "lab1_system" instantiated altera_avalon_jtag_uart "JTAG_UART"
 Info: System_PLL: "lab1_system" instantiated altera_up_avalon_sys_sdram_pll "System_PLL"

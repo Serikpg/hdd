@@ -3,10 +3,10 @@
 #define COUNT28_BASE_ADDRESS 0xFF200020
 
 #define BOOTH_BASE_ADDRESS 0xFF200000
-#define DATA_A_ADDRESS ( BOOTH_BASE_ADDRESS + 0x0 )
-#define DATA_B_ADDRESS ( BOOTH_BASE_ADDRESS + 0x4 )
-#define RESULT_ADDRESS ( BOOTH_BASE_ADDRESS + 0x8 )
-#define STATUS_ADDRESS ( BOOTH_BASE_ADDRESS + 0xC )
+#define DATA_A_ADDRESS 0xFF200000
+#define DATA_B_ADDRESS 0xFF200004
+#define RESULT_ADDRESS 0xFF200008
+#define STATUS_ADDRESS 0xFF20000C
 
 void set_A9_IRQ_stack(void);
 void config_GIC(void);
@@ -16,9 +16,8 @@ void enable_A9_interrupts(void);
  * declare these as volatile to avoid the compiler caching their values in
  * registers */
 volatile int key_pressed = 1;
-
-volatile int received;
-volatile int value_received;
+volatile int received = 0;
+volatile int res = 0;
 
 /* ********************************************************************************
  * This program demonstrates use of interrupts with C code. 
@@ -35,12 +34,10 @@ int main(void)
 {
 
     //volatile int *leds = (int *)LEDR_BASE;
-    volatile int *count28_enable = (int *)COUNT28_BASE_ADDRESS;
+    //volatile int *count28_enable = (int *)COUNT28_BASE_ADDRESS;
     volatile int *status = (int *)STATUS_ADDRESS;
     volatile int *data_a_ptr = (int *)DATA_A_ADDRESS;
     volatile int *data_b_ptr = (int *)DATA_B_ADDRESS; 
-
-    int data_a, data_b; 
 
     set_A9_IRQ_stack();      // initialize the stack pointer for IRQ mode
     config_GIC();            // configure the general interrupt controller
@@ -53,20 +50,26 @@ int main(void)
 
     while (1)
     {
-        if (received) { // if ISR notifies us new value has come
-            printf("result is: %d", value_received); // print out the mulltiplication resul
-        }
+        printf("status: %d\n", *status);
+        while (*status & 0x2) {};
+        // before entering the main loop we must be sure there are no pending interrupts
+        *status = (*status | 0x4); // set ack 1
+        *status = (*status ^ 0x4); // set ack 0
 
-    	// *count28_enable = key_pressed;
-        if (!(*status & 0x2)) { // if busy is not active
-            scanf("input operand a: %d", &data_a);
-            scanf("input operand b: %d", &data_b);
-            
-            *data_a_ptr = data_a;
-            *data_b_ptr = data_b;
+        // printf("busy is not active\n");
+        scanf("%d", data_a_ptr);
+        scanf("%d", data_b_ptr); 
 
-            *status = (*status | 0x1); // set start to 
-        }
+        // printf("a read: %d    b read: %d\n", *data_a_ptr, *data_b_ptr);
+
+        *status = 0x9; // set start to 1
+        // *status |= 0x1;
+        printf("start set to 1\n");
+        while (!received) {}; // if ISR notifies us new value has come
+        printf("status read: %d\n", *status);
+        received = 0;
+        printf("value has been received\n");
+        printf("result is: %d\n", res); // print out the mulltiplication result
     }
 }
 
@@ -80,9 +83,5 @@ void config_KEYs()
     // interrupts of the booth multiplier source
     volatile int * status = (int *)STATUS_ADDRESS;
     *status = 0x8; // slv_reg3(3) = 1'b1
-
-    // before entering the main loop we must be sure there are no pending interrupts
-    *status = (*status | 0x4); // set ack 1
-    *status = (*status ^ 0x4); // set ack 0
 }
 

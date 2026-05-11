@@ -1,15 +1,15 @@
 #include "address_map_arm.h"
+#include <stdio.h>
 
 #define BOOTH_BASE_ADDRESS 0xFF200000
-#define DATA_A_ADDRESS ( BOOTH_BASE_ADDRESS + 0x0 )
-#define DATA_B_ADDRESS ( BOOTH_BASE_ADDRESS + 0x4 )
-#define RESULT_ADDRESS ( BOOTH_BASE_ADDRESS + 0x8 )
-#define STATUS_ADDRESS ( BOOTH_BASE_ADDRESS + 0xC )
+#define DATA_A_ADDRESS 0xFF200000
+#define DATA_B_ADDRESS 0xFF200004
+#define RESULT_ADDRESS 0xFF200008
+#define STATUS_ADDRESS 0xFF20000C
 
 extern volatile int key_pressed;
-
 extern volatile int received;
-extern volatile int value_received;
+extern volatile int res;
 
 /***************************************************************************************
  * Pushbutton - Interrupt Service Routine
@@ -31,18 +31,18 @@ void pushbutton_ISR(void)
 
 void booth_ISR()
 {
+    // printf("entering the booth ISR\n");
     // 1st we must clear the interrupt by writing a value 1 and then 0
     // to bit slv_reg3(2) "ACK"
     volatile int * status = (int *)STATUS_ADDRESS;
-    volatile int * value  = (int *)RESULT_ADDRESS;
-    *status = (*status | 0x2); // set ack to 1
+    volatile int * resultpt = (int *)RESULT_ADDRESS;
+    *status = (*status & 0xE); // set start to 0
+    *status = (*status | 0x4); // set ack to 1
+    received = 1;
+    res = *resultpt;
+    *status = (*status & 0xB); // set ack to 0
 
     // store the contents of the result before allowing unblock
-    value_received = *value;
-    received = 1;
-
-    *status = (*status ^ 0x2); // set ack to 0
-    *status = (*status & 0xE); // set start to 0
 
     // a global flag should be set to let the application know that an
     // interrupt comming from the multiplier has been received

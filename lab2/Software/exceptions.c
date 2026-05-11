@@ -1,4 +1,5 @@
 #include "address_map_arm.h"
+#include <stdio.h>
 #include "defines.h"
 #include "interrupt_ID.h"
 /* This file:
@@ -18,9 +19,11 @@ void __attribute__((interrupt)) __cs3_isr_irq(void)
     int address = MPCORE_GIC_CPUIF + ICCIAR;
     int int_ID  = *((int *)address);
 
-    if (int_ID == KEYS_IRQ) // check if interrupt is from the KEYs
+    if (int_ID == KEYS_IRQ) { // check if interrupt is from the KEYs
+        //printf("entering point ISR\n");
         //pushbutton_ISR();
         booth_ISR();
+    }
     else
         while (1)
             ; // if unexpected, then stay here

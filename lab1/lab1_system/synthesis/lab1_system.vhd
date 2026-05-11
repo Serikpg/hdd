@@ -233,7 +233,7 @@ architecture rtl of lab1_system is
 		port (
 			clk                : in  std_logic                     := 'X';             -- clk
 			reset_n            : in  std_logic                     := 'X';             -- reset_n
-			irq                : out std_logic;                                        -- writeresponsevalid_n
+			irq                : out std_logic;                                        -- irq
 			axs_s0_AXI_AWADDR  : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- awaddr
 			axs_s0_AXI_AWPROT  : in  std_logic_vector(2 downto 0)  := (others => 'X'); -- awprot
 			axs_s0_AXI_AWVALID : in  std_logic                     := 'X';             -- awvalid
@@ -540,6 +540,7 @@ architecture rtl of lab1_system is
 	signal mm_interconnect_0_axi4_lite_booth_0_axi4_lite_awvalid         : std_logic;                     -- mm_interconnect_0:axi4_lite_booth_0_axi4_lite_awvalid -> axi4_lite_booth_0:axs_s0_AXI_AWVALID
 	signal mm_interconnect_0_axi4_lite_booth_0_axi4_lite_rvalid          : std_logic;                     -- axi4_lite_booth_0:axs_s0_AXI_RVALID -> mm_interconnect_0:axi4_lite_booth_0_axi4_lite_rvalid
 	signal irq_mapper_receiver0_irq                                      : std_logic;                     -- JTAG_UART:av_irq -> irq_mapper:receiver0_irq
+	signal irq_mapper_receiver1_irq                                      : std_logic;                     -- axi4_lite_booth_0:irq -> irq_mapper:receiver1_irq
 	signal arm_a9_hps_f2h_irq0_irq                                       : std_logic_vector(31 downto 0); -- irq_mapper:sender_irq -> ARM_A9_HPS:f2h_irq_p0
 	signal arm_a9_hps_f2h_irq1_irq                                       : std_logic_vector(31 downto 0); -- irq_mapper_001:sender_irq -> ARM_A9_HPS:f2h_irq_p1
 	signal rst_controller_reset_out_reset                                : std_logic;                     -- rst_controller:reset_out -> [mm_interconnect_0:JTAG_UART_reset_reset_bridge_in_reset_reset, rst_controller_reset_out_reset:in]
@@ -739,7 +740,7 @@ begin
 		port map (
 			clk                => system_pll_sys_clk_clk,                                --     clock.clk
 			reset_n            => rst_controller_reset_out_reset_ports_inv,              --     reset.reset_n
-			irq                => open,                                                  --       irq.writeresponsevalid_n
+			irq                => irq_mapper_receiver1_irq,                              --       irq.irq
 			axs_s0_AXI_AWADDR  => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_awaddr,  -- axi4_lite.awaddr
 			axs_s0_AXI_AWPROT  => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_awprot,  --          .awprot
 			axs_s0_AXI_AWVALID => mm_interconnect_0_axi4_lite_booth_0_axi4_lite_awvalid, --          .awvalid
@@ -835,7 +836,7 @@ begin
 			clk           => open,                     --       clk.clk
 			reset         => open,                     -- clk_reset.reset
 			receiver0_irq => irq_mapper_receiver0_irq, -- receiver0.irq
-			receiver1_irq => open,                     -- receiver1.irq
+			receiver1_irq => irq_mapper_receiver1_irq, -- receiver1.irq
 			sender_irq    => arm_a9_hps_f2h_irq0_irq   --    sender.irq
 		);
 
