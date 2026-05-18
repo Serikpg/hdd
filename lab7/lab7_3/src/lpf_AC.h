@@ -14,8 +14,8 @@ const unsigned TAP_COUNT = FILTER_ORDER+1;  // there are N+1 coefficients for an
 
 // Number of samples to detect one peak: Half period of the lower filter frequency
 // Tlow/(2Ts) = fs/(2flow) = 10 kHz/600 Hz = ~17. Take 32 for simpler division
-const unsigned SAMPLES_PEAK_DETECT = 20; // 32;
-const unsigned PK_AVG_CNT = 8;// 32; // Number of averaged peaks
+const unsigned SAMPLES_PEAK_DETECT = 32;
+const unsigned PK_AVG_CNT = 4; // 32; // Number of averaged peaks
 
 
 
@@ -36,8 +36,11 @@ const Y_TYPE x_lock = x_ref/8;
 const Y_TYPE x_inc_dec = x_ref/16;
 
 // Function prototypes
-void lpf_ac(const X_TYPE i_sample, COEFF_TYPE b[], Y_TYPE &y);
-void lpf(const X_TYPE i_sample, COEFF_TYPE b[], Y_TYPE &y);
+void bpf_gain_ac(const X_TYPE i_sample, COEFF_TYPE b[], Y_TYPE &y);
+void bpf(const X_TYPE i_sample, COEFF_TYPE b[], Y_TYPE &y);
+
+const COEFF_TYPE INC_GAIN_STEP = 0.02;
+const COEFF_TYPE DEC_GAIN_STEP = 0.02;
 
 #endif
 

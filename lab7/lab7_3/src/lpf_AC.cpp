@@ -14,51 +14,60 @@
 
 void bpf_gain_ac (const X_TYPE i_sample, COEFF_TYPE b[], Y_TYPE &y)
 {
-// Init variables
-Y_TYPE filter_out;
-static ac_fixed<12, 2, true> gain = 1.0;
-static Y_TYPE peak = 0;
-static ac_int<6, false> sample_counter = 0;
-static Y_TYPE peak_history[PK_AVG_CNT] = {0};
+    // Init variables
+    Y_TYPE filter_out;
+    static COEFF_TYPE gain = 1.0;
+    static Y_TYPE peak = 0;
+    static ac_int<6, false> peak_counter = 0;
+    static Y_TYPE peak_window[PK_AVG_CNT] = {0};
 
-// Band-pass filter
-bpf(i_sample, b, filter_out);
+    static COEFF_TYPE sample_window[SAMPLES_PEAK_DETECT];
+    static ac_int<6, false> sample_count = 0;
 
-// Apply the gain factor to the output of the filter
-Y_TYPE v_out = filter_out * gain;
+    // Band-pass filter
+    bpf(i_sample, b, filter_out);
 
-Y_TYPE abs_v_out = (v_out < 0) ? (Y_TYPE)(-v_out) : (Y_TYPE)(v_out);
-if (abs_v_out > peak) {
-  peak = abs_v_out;
-}
+    // Apply the gain factor to the output of the filter
+    Y_TYPE v_out = filter_out * gain;
 
-sample_counter++;
+    // 1. Rectifier
+    Y_TYPE abs_v_out = (v_out < 0) ? (Y_TYPE)(-v_out) : (Y_TYPE)(v_out);
 
-if (sample_counter == SAMPLES_PEAK_DETECT) {
-  sample_counter = 0;
+    // 2. Peak detector
 
-  UPDATE_HISTORY_LOOP: for (int i = PK_AVG_CNT - 1; i > 0; i--) {
-    peak_history[i] = peak_history[i-1];
-  }
-  peak_history[0] = peak;
-  peak = 0;
+    if (sample_count == SAMPLES_PEAK_DETECT) {
+        peak = 0;
+        PK_DETECT_TRAVERSAL: for (int i = 0; i < SAMPLES_PEAK_DETECT; i++) {
+            if (sample_window[i] > peak) peak = sample_window[i];
+        } 
+        sample_count = 0;
+        
+        peak_window[peak_counter] = peak;
+        peak_counter = (peak_counter == PK_AVG_CNT) ? (ac_int<6, false>)0 : (ac_int<6, false>)(peak_counter+1);
 
-  ac_fixed<16, 6, true> sum_peaks = 0;
-  AVERAGE_LOOP: for (int i = 0; i < PK_AVG_CNT; i++) {
-    sum_peaks += peak_history[i];
-  }
-  Y_TYPE avg_peak = sum_peaks / PK_AVG_CNT;
+        // 3. Peak averaging
+        ac_fixed<16, 6, true> sum_peaks = 0;
+        AVERAGE_LOOP: for (int i = 0; i < PK_AVG_CNT; i++) {
+            sum_peaks += peak_window[i];
+        }
+        Y_TYPE avg_peak = sum_peaks / PK_AVG_CNT;
+        // this line should be HW implemented as shift left 3
 
-  if (avg_peak < x_inc_dec) {
-    // Signal too weak or null input. Do nothing here
-  } else if (avg_peak > x_high) {
-    gain -= (ac_fixed<12, 2, true>)0.002; // TODO: Check step size
-  } else if (avg_peak < x_low) {
-    gain += (ac_fixed<12, 2, true>)0.002;
-  }
-}
+        // 4. Gain comparison and control
+        if (avg_peak < x_inc_dec) {
+            // Signal too weak or null input. Do nothing here
+        } else if (avg_peak > x_high) {
+            gain -= (COEFF_TYPE)INC_GAIN_STEP; // TODO: Check step size
+        } else if (avg_peak < x_low) {
+            gain += (COEFF_TYPE)DEC_GAIN_STEP;
+        }
 
-y = v_out;
+    } else {
+        sample_window[sample_count] = abs_v_out;
+        sample_count++;
+    }
+
+    y = v_out;
 }
 
 // Band-pass filter function

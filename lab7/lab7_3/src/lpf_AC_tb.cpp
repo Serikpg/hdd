@@ -32,7 +32,7 @@ bool WriteCSV_Samples(string, samplesVector_t &samples);
 
 //
 // Function: main
-//   Test the lpf_ac() function using data from CSV files
+//   Test the bpf_gain_ac() function using data from CSV files
 //
 int main()
 {
@@ -55,7 +55,7 @@ int iter =0;
   // Loop through samples, applying them to the filter
   for (vector<STIMULUS_TYPE>::iterator it = samples.begin(); it != samples.end(); ++it) {
     STIMULUS_TYPE stimulus_element = *it;
-    lpf_ac(stimulus_element.i_sample, filterCoeffs, stimulus_element.o_sample);
+    bpf_gain_ac(stimulus_element.i_sample, filterCoeffs, stimulus_element.o_sample);
     samples_out.push_back(stimulus_element);
   }
 
