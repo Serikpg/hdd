@@ -54,12 +54,12 @@ void bpf_gain_ac (const X_TYPE i_sample, COEFF_TYPE b[], Y_TYPE &y)
         // this line should be HW implemented as shift left 3
 
         // 4. Gain comparison and control
-        if (avg_peak < x_inc_dec) {
+        if (avg_peak < x_lock) {
             // Signal too weak or null input. Do nothing here
         } else if (avg_peak > x_high) {
-            gain -= (COEFF_TYPE)INC_GAIN_STEP; // TODO: Check step size
+            gain -= x_inc_dec; // TODO: Check step size
         } else if (avg_peak < x_low) {
-            gain += (COEFF_TYPE)DEC_GAIN_STEP;
+            gain += x_inc_dec;
         }
 
     } else {

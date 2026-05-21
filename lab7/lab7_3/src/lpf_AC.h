@@ -33,14 +33,11 @@ const Y_TYPE x_ref = x_max/2;
 const Y_TYPE x_high = x_ref + x_ref/64;
 const Y_TYPE x_low = x_ref - x_ref/64; 
 const Y_TYPE x_lock = x_ref/8;
-const Y_TYPE x_inc_dec = x_ref/16;
+const Y_TYPE x_inc_dec = 0.03; // x_ref/16;
 
 // Function prototypes
 void bpf_gain_ac(const X_TYPE i_sample, COEFF_TYPE b[], Y_TYPE &y);
 void bpf(const X_TYPE i_sample, COEFF_TYPE b[], Y_TYPE &y);
-
-const COEFF_TYPE INC_GAIN_STEP = 0.02;
-const COEFF_TYPE DEC_GAIN_STEP = 0.02;
 
 #endif
 
